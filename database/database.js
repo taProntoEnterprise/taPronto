@@ -12,9 +12,4 @@ conf_set.forEach(function(data_row){
         db_config[conf_row[0]] = conf_row[1];
 });
 
-module.exports = mongoose.connect(
-                        db_config.ENGINE + "://"
-                        + db_config.HOST + ":"
-                        + db_config.PORT + "/"
-                        + db_config.DATABASE
-);
+module.exports = mongoose.connect("mongodb://localhost:27017/taPronto");
