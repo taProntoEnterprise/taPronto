@@ -1,0 +1,14 @@
+<div *ngIf="usuario">
+	<h2> Usuario Selecionado:</h2>
+	<div>
+		<div> 
+			<label for="login"> Login: </label> 
+			<span id="login">  {{usuario.login}} </span>
+		</div>
+		<div> 
+			<label for="nome"> Nome: </label> 
+			<span id="nome"> {{usuario.nome}} </span>
+		</div>
+	</div>
+	<button (click)="redirecionaAdmin()"> Ir para Painel de Administrador</button>
+</div>

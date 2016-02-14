@@ -1,0 +1,15 @@
+<div *ngIf="usuario">
+	<h2> Modificar Usuario:</h2>
+	<div>
+		<div> 
+			<label for="login"> Login: </label> 
+			<input id="login" [(ngModel)]="usuario.login">  
+		</div>
+		<div> 
+			<label for="nome"> Nome: </label> 
+			<input id="nome" [(ngModel)]="usuario.nome"> 
+		</div>
+	</div>
+	<button > Salvar </button>
+	<button (click)="voltar()"> Voltar </button>
+</div>

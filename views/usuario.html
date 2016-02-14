@@ -1,0 +1,12 @@
+<div>
+	<h1> Welcome to {{produto}} </h1>
+
+	<h2> Lista de Usuarios:</h2>
+	<ul>
+	  <li *ngFor="#usuario of usuarios" (click)="onSelect(usuario)">
+	  	 <span>Nome | {{usuario.nome}}</span> 
+	  </li>
+	</ul>
+
+	<detalhes-usuario [usuario]="usuarioSelecionado"> </detalhes-usuario>
+</div>
