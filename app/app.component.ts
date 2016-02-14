@@ -14,12 +14,13 @@ import { AdminUsuarioComponent } from './admin-usuario.component';
   ]
 })
 
+// Router config da vida, onde coloca as views e o path de cada uma dela
 @RouteConfig([
   {
-    path: '/usuarios',
-    name: 'Usuarios',
-    component: ListaUsuarioComponent,
-    useAsDefault: true
+    path: '/usuarios',  // path que aparece na URL
+    name: 'Usuarios', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
+    component: ListaUsuarioComponent, // Componente a ser utilizado, o route-outlet sera substituido por esse componente
+    useAsDefault: true // intuitivo 
     },
     {
     path: '/usuario/:login',
