@@ -1,12 +1,24 @@
 import {Injectable} from 'angular2/core';
 import {Usuario} from './usuario';
+import {Http, Response} from 'angular2/http';
+import {Observable} from 'rxjs/Observable';
+
 
 // Velho e bom service do Angular
 @Injectable() // <-- Fucking necessarios esses parenteses, foi dito umas 3 vzs para sempre colocar eles, entao deve ser importante
 export class UsuarioService {
-  	getUsuarios() {
-  		// Promise que se resolve automaticamente com o array de mock
-	  	return Promise.resolve(USUARIOS);
+	constructor(private http: Http) { }
+
+	private _usuariosUrl = 'http://localhost:3000/users/';
+
+	getUsuarios() {
+		var response = this.http.get(this._usuariosUrl)
+                .map(res => <Usuario[]> res.json().result)
+			.do(info => console.log(info)) 
+				.catch(this.handleError);
+
+		console.log(response);
+		return response;
 	}
 
 	getUsuario(login : string) {
@@ -15,6 +27,11 @@ export class UsuarioService {
 			usuarios => usuarios.filter(usuarios => usuarios.login === login)[0]
     	);			
 	}
+
+ 	private handleError (error: Response) {
+	   console.error(error);
+	   return Observable.throw(error.json().error || 'Server error');
+	 }
 }
 
 // Mock

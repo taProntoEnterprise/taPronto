@@ -9,18 +9,21 @@ import {UsuarioService} from './usuario.service';
 @Component({
     selector: 'lista-usuario', // nome utilizado no HTML para importar a diretiva
     templateUrl: 'views/usuario.html', // template html
-	directives: [DetalhesUsuarioComponent], // Aqui vc pode adicionar outros componentes, aka diretivas ao seu componente
+	directives: [DetalhesUsuarioComponent] // Aqui vc pode adicionar outros componentes, aka diretivas ao seu componente
 })
+
+
 
 // Aqui eh a função em si do controller/diretiva
 export class ListaUsuarioComponent implements OnInit { 
 	// Quando vc quer injetar algo vc utiliza essa notação abaixo
-	constructor(private _usuarioService: UsuarioService) { }
+	constructor(private _usuarioService: UsuarioService) {	}
 
 	public produto = 'TaPronto?';
 
 	public usuarioSelecionado: Usuario;
 	public usuarios;
+	public errorMessage;
 
 	onSelect(usuario: Usuario) { 
 		this.usuarioSelecionado = usuario;
@@ -28,7 +31,9 @@ export class ListaUsuarioComponent implements OnInit {
 
 	getUsuarios() {
 		// Isso é tratamento de promise, bastante similar a linguagem funcional, lambda expressions
-		this._usuarioService.getUsuarios().then(usuarios => this.usuarios = usuarios);
+			this._usuarioService.getUsuarios().subscribe(
+				usuarios => this.usuarios = usuarios,
+                error => this.errorMessage = <any>error);
 	};
 
 	// Isso funciona feito o main de um controller, vc nao pode (eles pedem para não) chamar metodos
