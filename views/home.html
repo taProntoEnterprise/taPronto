@@ -1,9 +1,17 @@
-TaPronto?
 <div>
-	<nav>
-	<a [routerLink]="['Usuarios']">Lista de Usuarios</a>
-	<a [routerLink]="['AddUsuario']">Adiciona Usuario</a>
-	</nav>
-	<router-outlet></router-outlet>
+	<div align="center">
+		<h1 > Bem vindo ao taPronto? </h1>	
+	</div>
+
+	<hr style="color: #0056b2;" />
+	
+	<div>
+		<nav>
+			<button class="btn btn-primary" [routerLink]="['Usuarios']">Lista de Usuarios</button>
+			<button class="btn btn-primary" [routerLink]="['AddUsuario']">Adiciona Usuario</button>
+		</nav>
+		<router-outlet></router-outlet>
+	</div>
+
 </div>
 

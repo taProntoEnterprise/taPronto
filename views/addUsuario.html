@@ -1,15 +1,19 @@
-<div>
-	<h2> Adicionar Usuario:</h2>
+<div class="container">
+	<div class="row"> <h2> Adicionar Usuario:</h2> </div>
 	<div>
-		<div> 
+		<div class="row"> 
 			<label for="login"> Username: </label> 
-			<input id="login" [(ngModel)]="novoUsuario.username">  
+			<input id="login" class="form-control" [(ngModel)]="novoUsuario.username">  
 		</div>
-		<div> 
+		<br>
+		<div class="row"> 
 			<label for="nome"> Password: </label> 
-			<input type="password"id="nome" [(ngModel)]="novoUsuario.password"> 
+			<input type="password"id="nome" class="form-control" [(ngModel)]="novoUsuario.password"> 
 		</div>
 	</div>
-	<button (click)="addUsuario()"> Salvar </button>
-	<button (click)="voltar()"> Voltar </button>
+		<br>
+	<div class="row">
+		<button class="btn btn-primary" (click)="addUsuario()"> Salvar </button>
+		<button class="btn btn-primary" (click)="voltar()"> Voltar </button>
+	</div>
 </div>
