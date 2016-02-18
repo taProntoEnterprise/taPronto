@@ -1,0 +1,15 @@
+<div>
+	<h2> Adicionar Usuario:</h2>
+	<div>
+		<div> 
+			<label for="login"> Username: </label> 
+			<input id="login" [(ngModel)]="novoUsuario.username">  
+		</div>
+		<div> 
+			<label for="nome"> Password: </label> 
+			<input id="nome" [(ngModel)]="novoUsuario.password"> 
+		</div>
+	</div>
+	<button (click)="addUsuario()"> Salvar </button>
+	<button (click)="voltar()"> Voltar </button>
+</div>

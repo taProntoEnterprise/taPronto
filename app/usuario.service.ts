@@ -13,8 +13,8 @@ export class UsuarioService {
 
 	getUsuarios() {
 		var response = this.http.get(this._usuariosUrl)
-                .map(res => <Usuario[]> res.json().result)
-			.do(info => console.log(info)) 
+                .map(res => <Object[]> res.json().result)
+			    .do(info => console.log(info)) 
 				.catch(this.handleError);
 
 		console.log(response);
