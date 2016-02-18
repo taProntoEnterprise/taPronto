@@ -11,6 +11,7 @@ var db = require("./database/database");
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var dev = require('./routes/dev');
+var cors = require('cors');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/node_modules', express.static(__dirname + '/node_modules/'));
 app.use('/bootstrap',express.static(__dirname+'/node_modules/ /dist/'));
 app.use('/app', express.static(__dirname + '/app/'));
 app.use('/views', express.static(__dirname + '/views/'));
+app.use(cors());
 
 app.use(function(req,res,next){
     req.db = db;
