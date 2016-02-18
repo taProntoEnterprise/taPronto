@@ -3,6 +3,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/route
 import { UsuarioService } from './usuario.service';
 import { ListaUsuarioComponent } from './lista-usuario.component';
 import { AdminUsuarioComponent } from './admin-usuario.component';
+import { AddUsuarioComponent } from './add-usuario.component';
 
 @Component({
   selector: 'my-app',
@@ -27,6 +28,11 @@ import { AdminUsuarioComponent } from './admin-usuario.component';
     name: 'Usuario',
     component: AdminUsuarioComponent,
   },
+  {
+      path: '/usuario/addUsuario',
+    name: 'AddUsuario',
+    component: AddUsuarioComponent,
+  }
 ])
 
 export class AppComponent {
