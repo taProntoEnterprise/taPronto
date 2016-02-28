@@ -1,12 +1,12 @@
 var express = require('express');
-var User = require('../models/user.js');
+var Service = require('../models/service.js');
 var router = express.Router();
 
 router.get('/',function(req,res){
 	var error = {};
 	var result = {};
 
-	User.find(function(err,doc){
+	Service.find(function(err,doc){
 		if(err){
                 res.contentType('application/json');
                 res.status(500);
@@ -19,13 +19,14 @@ router.get('/',function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
             }
 	});
-});
 
-router.post('/adduser', function(req, res) {
-	var user = new User(req.body);
+
+});
+router.post('/addservice', function(req, res) {
+	var service = new Service(req.body);
 	var error= {};
 	var result = {};
-	user.save(function(err) {
+	service.save(function(err) {
 		if (err) {
 			error.code = err.code;
 			error.message = err.message;

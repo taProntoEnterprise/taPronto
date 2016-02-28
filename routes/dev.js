@@ -1,5 +1,8 @@
 var express = require('express');
 var User = require('../models/user.js');
+var Person = require('../models/person.js');
+var Service = require('../models/service.js');
+var Notification = require('../models/notification.js');
 var router = express.Router();
 
 router.get('/',function (req,res){
@@ -16,7 +19,7 @@ router.get('/populate', function(req, res) {
                 error.code = err.code;
                 error.message = err.message;
                 error.code == 11000 ? res.status(409) : res.status(500);
-                berak;
+                //break;
             }else{
               res.status(201);
           }
@@ -25,6 +28,47 @@ router.get('/populate', function(req, res) {
 
     res.send(JSON.stringify({"result": result, "error": error}));
 });
+
+router.get('/populateservices', function(req, res) {
+    var error= {};
+    var result = {};
+    for(var i=0;i<=services.length;i++){
+        var service = new Service(services[i]);
+        service.save(function(err) {
+            if (err) {
+                error.code = err.code;
+                error.message = err.message;
+                error.code == 11000 ? res.status(409) : res.status(500);
+               // break;
+            }else{
+              res.status(201);
+          }
+      });
+    }
+
+    res.send(JSON.stringify({"result": result, "error": error}));
+});
+
+router.get('/populatenotifications', function(req, res) {
+    var error= {};
+    var result = {};
+    for(var i=0;i<=notifications.length;i++){
+        var notification = new Notification(notifications[i]);
+        notification.save(function(err) {
+            if (err) {
+                error.code = err.code;
+                error.message = err.message;
+                error.code == 11000 ? res.status(409) : res.status(500);
+               // break;
+            }else{
+              res.status(201);
+          }
+      });
+    }
+
+    res.send(JSON.stringify({"result": result, "error": error}));
+});
+
 
 router.get('/drop',function(req,res){
    var error= {};
@@ -41,6 +85,38 @@ router.get('/drop',function(req,res){
     });
    res.send(JSON.stringify({"result": result, "error": error}));
 });
+
+router.get('/dropservice',function(req,res){
+	   var error= {};
+	   var result = {};
+	   Service.remove(function(err){
+	        if (err) {
+	            error.code = err.code;
+	            error.message = err.message;
+	            error.code == 11000 ? res.status(409) : res.status(500);
+	            berak;
+	        }else{
+	          res.status(201);
+	        }
+	    });
+	   res.send(JSON.stringify({"result": result, "error": error}));
+	});
+
+router.get('/dropnotification',function(req,res){
+	   var error= {};
+	   var result = {};
+	   Notification.remove(function(err){
+	        if (err) {
+	            error.code = err.code;
+	            error.message = err.message;
+	            error.code == 11000 ? res.status(409) : res.status(500);
+	            berak;
+	        }else{
+	          res.status(201);
+	        }
+	    });
+	   res.send(JSON.stringify({"result": result, "error": error}));
+	});
 
 module.exports = router;
 
@@ -88,5 +164,42 @@ var users = [{
     "password": "test14"
 }, {
     "username": "test15",
-    "password": "test15"
-}]
+    "password": "test123"
+}];
+
+var services = [{
+	"code": "1234",
+	"description": "bolo1",
+	"generator": new Person ({
+		"name": "nome1"
+	}),
+	"client": new Person ({
+		"name": "nome2"
+	}),
+	"status": "aguardando",
+	"creation_date": new Date()
+}];
+
+var notifications = [{
+	"code": "2222",
+	"service_code": new Service({
+		"code": "123",
+		"description": "description",
+		"generator": new Person ({
+			"name": "name4"
+		}),
+		"client": new Person ({
+			"name": "name4"
+		}),
+		"status": "donw",
+		"creation_date": new Date()
+	}),
+	"message": "message",
+	"notifier": new Person ({
+		"name": "name5"
+	}),
+	"notified": new Person ({
+		"name": "name6"
+	}),
+	"notification_date": new Date()
+}];

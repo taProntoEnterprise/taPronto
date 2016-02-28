@@ -10,6 +10,8 @@ var db = require("./database/database");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var services = require('./routes/services');
+var notifications = require('./routes/notifications');
 var dev = require('./routes/dev');
 var cors = require('cors');
 
@@ -41,6 +43,8 @@ app.use(function(req,res,next){
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/services', services);
+app.use('/notifications', notifications);
 app.use('/dev',dev);
 
 // catch 404 and forward to error handler

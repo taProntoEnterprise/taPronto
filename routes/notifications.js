@@ -1,12 +1,12 @@
 var express = require('express');
-var User = require('../models/user.js');
+var Notification = require('../models/notification.js');
 var router = express.Router();
 
 router.get('/',function(req,res){
 	var error = {};
 	var result = {};
 
-	User.find(function(err,doc){
+	Notification.find(function(err,doc){
 		if(err){
                 res.contentType('application/json');
                 res.status(500);
@@ -19,13 +19,14 @@ router.get('/',function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
             }
 	});
-});
 
-router.post('/adduser', function(req, res) {
-	var user = new User(req.body);
+
+});
+router.post('/addnotification', function(req, res) {
+	var notification = new Notification(req.body);
 	var error= {};
 	var result = {};
-	user.save(function(err) {
+	notification.save(function(err) {
 		if (err) {
 			error.code = err.code;
 			error.message = err.message;
