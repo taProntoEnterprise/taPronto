@@ -39,4 +39,34 @@ router.post('/adduser', function(req, res) {
 	});
 });
 
+
+router.post('/login',function(req,res){
+	var username = req.body.username;
+	var password = req.body.password;
+
+	var result = {};
+	var error= {};
+
+	User.findOne({username:username},function(err,doc){
+		if(doc){
+			console.log(doc.password +" - "+password);
+			if(doc.password == password){
+				res.status(200);
+				result.code=200;
+				res.send(JSON.stringify({"result":result,"error":error}));
+			}else{
+				res.status(401);
+				error.code=401;
+				error.message="Unauthorized";
+				res.send(JSON.stringify({"result":result,"error":error}));	
+			}
+		}else{
+			res.status(404);
+			error.code=404;
+			error.message="Not Found";
+			res.send(JSON.stringify({"result":result,"error":error}));	
+		}
+	});
+});
+
 module.exports = router;
