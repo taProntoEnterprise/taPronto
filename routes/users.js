@@ -1,5 +1,8 @@
 var express = require('express');
 var User = require('../models/user.js');
+var Notification = require('../models/notification.js');
+var Service = require('../models/service.js');
+var mongoose = require('mongoose');
 var router = express.Router();
 
 router.get('/',function(req,res){
@@ -46,7 +49,7 @@ router.post('/login',function(req,res){
 
 	var result = {};
 	var error= {};
-
+	
 	User.findOne({username:username},function(err,doc){
 		if(doc){
 			console.log(doc.password +" - "+password);
@@ -66,6 +69,83 @@ router.post('/login',function(req,res){
 			error.message="Not Found";
 			res.send(JSON.stringify({"result":result,"error":error}));	
 		}
+	});
+});
+
+router.post('/receivednotifications',function(req,res){
+	var error = {};
+	var result = {};
+	var personId = mongoose.Types.ObjectId(req.body.person);
+	console.log("peguei o OID "+ personId);
+	Notification.find({notified:personId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
+	});
+});
+
+router.post('/sentnotifications',function(req,res){
+	var error = {};
+	var result = {};
+	var personId = mongoose.Types.ObjectId(req.body.person);
+	Notification.find({notifier:personId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
+	});
+});
+
+router.post('/providedservices',function(req,res){
+	var error = {};
+	var result = {};
+	var personId = mongoose.Types.ObjectId(req.body.person);
+	Service.find({generator:personId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
+	});
+});
+
+router.post('/contractedservices',function(req,res){
+	var error = {};
+	var result = {};
+	var personId = mongoose.Types.ObjectId(req.body.person);
+	Service.find({client:personId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
 	});
 });
 
