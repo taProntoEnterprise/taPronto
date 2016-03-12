@@ -21,10 +21,10 @@ UserSchema.pre('save',function (next) {
 	}); 
 });
 
-UserSchema.methods.verifyPass = function (candidatePassword,cb) {
+UserSchema.methods.verifyPass = function (candidatePassword) {
 	var user= this;
 	var candidate = scrypt.hashSync(candidatePassword,{"N":16,"r":1,"p":1},64,"");
-	return cb(null, user.password===candidate.toString("hex"));
+	return user.password===candidate.toString("hex");
 };
 
 
