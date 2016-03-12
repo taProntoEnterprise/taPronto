@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<body>
+  <section id="logo">
+    <a href="#"><img src="../assets/images/logo.png" alt="" /></a>
+  </section>
+  
+  <section class="container">
+    <section class="row">
+      <form method="post" action="" role="login">
+        <div>
+          <label>Login</label>
+          <input type="text" name="username" required class="form-control" />
+        </div>
+        
+        <div>
+          <label>Senha</label>
+          <input type="password" name="password" required class="form-control" />
+        </div>
+      
+        <section>
+          <button type="submit" name="go" class="btn btn-block">Entrar</button>
+          <p><a href="#" (click)="goToAddUser()">Criar uma nova conta</a></p> 
+        </section>
+      </form>
+    </section>
+  </section>
+</body>

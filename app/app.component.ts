@@ -1,17 +1,13 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
-import { UsuarioService } from './usuario.service';
-import { ListaUsuarioComponent } from './lista-usuario.component';
-import { AdminUsuarioComponent } from './admin-usuario.component';
-import { AddUsuarioComponent } from './add-usuario.component';
+import { LoginComponent } from './login.component';
 
 @Component({
   selector: 'my-app',
   templateUrl: 'views/home.html',
   directives: [ROUTER_DIRECTIVES],
   providers: [
-    ROUTER_PROVIDERS,
-    UsuarioService
+    ROUTER_PROVIDERS
   ]
 })
 
@@ -19,20 +15,10 @@ import { AddUsuarioComponent } from './add-usuario.component';
 @RouteConfig([
   {
     path: '/',  // path que aparece na URL
-    name: 'Usuarios', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
-    component: ListaUsuarioComponent, // Componente a ser utilizado, o route-outlet sera substituido por esse componente
+    name: 'User', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
+    component: LoginComponent, // Componente a ser utilizado, o route-outlet sera substituido por esse componente
     useAsDefault: true // intuitivo 
-    },
-    {
-      path: '/usuario/:login',
-    name: 'Usuario',
-    component: AdminUsuarioComponent,
-  },
-  {
-      path: '/usuario/addUsuario',
-    name: 'AddUsuario',
-    component: AddUsuarioComponent,
-  }
+    }
 ])
 
 export class AppComponent {
