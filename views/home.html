@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<alert *ngFor="#alert of service.alerts;#i = index" [type]="alert.type" dismissible="true"  
+dismissOnTimeout="3000" (close)="closeAlert(i)" class="overlay" >
+	{{ alert?.msg }}
+</alert>
+<router-outlet ></router-outlet>

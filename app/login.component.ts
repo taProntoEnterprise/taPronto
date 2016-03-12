@@ -1,7 +1,8 @@
 import {Component, OnInit} from 'angular2/core';
 import {User} from './user';
 import {UserService} from './user.service';
-import { Router } from 'angular2/router';
+import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import { AlertService } from './alert.service';
 
 
 // Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
@@ -10,6 +11,7 @@ import { Router } from 'angular2/router';
 @Component({
     selector: 'login', // nome utilizado no HTML para importar a diretiva
     templateUrl: 'views/login.html',
+    directives: [ROUTER_DIRECTIVES],
 	providers: [UserService]
 })
 
@@ -18,9 +20,21 @@ export class LoginComponent {
 	// Quando vc quer injetar algo vc utiliza essa notação abaixo
 	constructor(
 		private _router: Router,
-		private _userService: UserService) { }
-	
-	goToAddUser(){
-		// this._router.navigate( ['AddUser']);
+		private _userService: UserService,
+		private _alertService: AlertService) { }
+
+	public loginUser = { 
+		username: "",
+		password: ""
+	}
+
+	goToHomepage(user : Object) {
+		console.log(user);
+	}
+
+	login() {
+		this._userService.login(this.login).subscribe(
+						user => this.goToHomepage(user),
+						error => this._alertService.addErrorAlert("Problemas no servidor, tente mais tarde"))
 	}
 }

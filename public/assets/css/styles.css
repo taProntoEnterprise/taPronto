@@ -10,6 +10,14 @@ body {
 	background-color: #f7f7f7;
 }
 
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
 #logo {
 	text-align: center;
 	padding: 86px 0 66px 0;
