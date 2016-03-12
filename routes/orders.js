@@ -23,10 +23,11 @@ router.get('/',function(req,res){
 
 });
 router.post('/addorder', function(req, res) {
-	var Order = new Order(req.body);
+	var new_order = new Order(req.body);
+	console.log(new_order);
 	var error= {};
 	var result = {};
-	Order.save(function(err) {
+	new_order.save(function(err) {
 		if (err) {
 			error.code = err.code;
 			error.message = err.message;
