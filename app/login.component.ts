@@ -28,13 +28,18 @@ export class LoginComponent {
 		password: ""
 	}
 
-	goToHomepage(user : Object) {
-		console.log(user);
+	goToHomepage() {
+		this._router.navigate(["Dashboard"]);
+	}
+
+	errorLogin() {
+		this._alertService.addErrorAlert("Problemas no servidor, tente mais tarde");
+		this._router.navigate(["Dashboard"]);
 	}
 
 	login() {
 		this._userService.login(this.login).subscribe(
-						user => this.goToHomepage(user),
-						error => this._alertService.addErrorAlert("Problemas no servidor, tente mais tarde"))
+			user => this.goToHomepage(user),
+			error => this.errorLogin())
 	}
 }
