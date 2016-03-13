@@ -52,8 +52,7 @@ router.post('/login',function(req,res){
 	
 	User.findOne({username:username},function(err,doc){
 		if(doc){
-			console.log(doc.password +" - "+password);
-			if(doc.password == password){
+			if(doc.verifyPass(password)){
 				res.status(200);
 				result.code=200;
 				res.send(JSON.stringify({"result":result,"error":error}));
