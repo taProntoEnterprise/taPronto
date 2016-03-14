@@ -1,6 +1,8 @@
 var express = require('express');
 var Order = require('../models/order.js');
 var router = express.Router();
+var ObjectId = require('mongoose').Types.ObjectId;
+
 
 router.get('/',function(req,res){
 	var error = {};
@@ -22,6 +24,27 @@ router.get('/',function(req,res){
 
 
 });
+
+router.get(/\/order\/(\w+)$/,function(req,res){
+	var error = {};
+	var result = {};
+	var orderId = new ObjectId(req.params[0]);
+
+	Order.findOne({_id:orderId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
+	});
+});
+
 router.post('/addorder', function(req, res) {
 	var new_order = new Order(req.body);
 	console.log(new_order);
