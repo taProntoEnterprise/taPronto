@@ -21,13 +21,13 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li [ngClass]="{active: isOn('Inicio')}"><a>Início</a></li>
-        <li [ngClass]="{active: isOn('Profile')}"><a>Perfil</a></li>
+        <li [ngClass]="{active: isOn('Inicio')}" (click)="goTo('Inicio')"><a>Início</a></li>
+        <li [ngClass]="{active: isOn('Profile')}" (click)="goTo('Profile')"><a>Perfil</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li [ngClass]="{active: isOn('Order')}"><a>Pedidos</a></li>
-        <li [ngClass]="{active: isOn('Service')}"><a>Serviços</a></li>
-        <li [ngClass]="{active: isOn('Help')}" ><a>Ajuda</a></li>
+        <li [ngClass]="{active: isOn('Order')}" (click)="goTo('Order')"><a>Pedidos</a></li>
+        <li [ngClass]="{active: isOn('Service')}" (click)="goTo('Service')"><a>Serviços</a></li>
+        <li [ngClass]="{active: isOn('Help')}" (click)="goTo('Help')"><a>Ajuda</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

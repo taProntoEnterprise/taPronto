@@ -4,34 +4,41 @@ import { ServiceComponent } from './service-list.component';
 import { OrderComponent } from './order.component';
 import { ProfileComponent } from './profile.component';
 import { HelpComponent } from './help.component';
+import { AddServiceComponent } from './add-service.component'
 import { NgClass } from 'angular2/common';
+import { AlertService } from './alert.service'
 
 @Component({
   selector: "dashboard",
   templateUrl: 'views/dashboard.html',
   directives: [ROUTER_DIRECTIVES, NgClass]
-})
+}) 
 
 // Router config da vida, onde coloca as views e o path de cada uma dela
 
 @RouteConfig([
-  {
+    {
       path: '/service',  
       name: 'Service', 
-      component: ServiceComponent
-    },
+      component: ServiceComponent,
+      useAsDefault: true
+    },  
+    {
+      path: '/addService',
+      name: 'AddService',
+      component: AddServiceComponent
+    }, 
     {
       path: '/order',  
       name: 'Order', 
-      component: OrderComponent,
-      useAsDefault: true
-  },
-  {
+      component: OrderComponent
+    },
+    {
       path: '/profile',  
       name: 'Profile', 
       component: ProfileComponent
     },
-   {
+    {
       path: '/help',  
       name: 'Help', 
       component: HelpComponent
@@ -39,16 +46,21 @@ import { NgClass } from 'angular2/common';
 ])
 
 export class DashboardComponent {
-  constructor(public _router: Router) {}
- 
-  public currentRoute = "Order";
+  constructor(private _router: Router,
+      private _alertService: AlertService ) {}
+
+  public currentRoute = "Service";
 
   public isOn(route : string){
     return route == this.currentRoute;
   }
 
   public goTo(route : string){
-    this._router.navigate([route]);
+    if(route == 'Inicio'){
+      this._alertService.addErrorAlert("Não implementado")
+    } else {
+      this._router.navigate([route]);
+      this.currentRoute = route;
+    }
   }
-
 } 

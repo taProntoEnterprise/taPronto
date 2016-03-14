@@ -1,1 +1,22 @@
-<h2> Serviços </h2>
+<h2 class="sub-header">Serviços</h2>
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="#service of serviceList">
+      <td>{{service.name}}</td>
+      <td>{{service.description}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="row">
+	<button class="btn btn-primary" (click)="goToRegisterService()"> Cadstrar Novo Serviço</button>
+	<button class="btn btn-primary" (click)="showFilterOptions()"> Filtrar Serviços Listados</button>
+</div>

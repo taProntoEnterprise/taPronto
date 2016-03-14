@@ -16,7 +16,7 @@ import { DashboardComponent } from './dashboard.component'
 // Router config da vida, onde coloca as views e o path de cada uma dela
 @RouteConfig([
   {
-      path: '/login',  
+      path: '/',  
       name: 'User', 
       component: LoginComponent, 
       useAsDefault: true 

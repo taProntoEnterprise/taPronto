@@ -39,7 +39,7 @@ export class LoginComponent {
 
 	login() {
 		this._userService.login(this.login).subscribe(
-			user => this.goToHomepage(user),
+			user => this.goToHomepage(),
 			error => this.errorLogin())
 	}
-}
+} 
