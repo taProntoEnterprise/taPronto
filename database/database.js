@@ -12,4 +12,4 @@ conf_set.forEach(function(data_row){
         db_config[conf_row[0]] = conf_row[1];
 });
 
-module.exports = mongoose.connect("mongodb://localhost:27017/taPronto");
+module.exports = mongoose.connect("mongodb://heroku_j0825v7g:9uh22o76bckinmmkpu741embk6@ds019678.mlab.com:19678/heroku_j0825v7g");
