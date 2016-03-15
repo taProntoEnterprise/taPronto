@@ -32,14 +32,14 @@ export class LoginComponent {
 		this._router.navigate(["Dashboard"]);
 	}
 
-	errorLogin() {
+	errorLogin(error) {
+		console.log(error);
 		this._alertService.addErrorAlert("Problemas no servidor, tente mais tarde");
-		this._router.navigate(["Dashboard"]);
 	}
 
 	login() {
-		this._userService.login(this.login).subscribe(
+		this._userService.login(this.loginUser).subscribe(
 			user => this.goToHomepage(),
-			error => this.errorLogin())
+			error => this.errorLogin(error))
 	}
 } 

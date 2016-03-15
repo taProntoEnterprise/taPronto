@@ -9,14 +9,13 @@
       <form method="post" action="" role="login" (ngSubmit)="login()">
         <div>
           <label>Login</label>
-          <input type="text" name="username" required class="form-control" />
+          <input type="text" name="username" required class="form-control" [(ngModel)]="loginUser.username"/>
         </div>
         
         <div>
           <label>Senha</label>
-          <input type="password" name="password" required class="form-control" />
+          <input type="password" name="password" required class="form-control" [(ngModel)]="loginUser.password" />
         </div>
-      
         <section>
           <button type="submit" name="go" class="btn btn-block">Entrar</button>
           <p><a [routerLink]="['AddUser']">Criar uma nova conta</a></p> 
