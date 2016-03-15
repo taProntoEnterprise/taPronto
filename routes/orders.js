@@ -80,36 +80,3 @@ router.post('/addorder', function(req, res) {
 });
 
 module.exports = router;
-
-var client = "1";
-var service = "2";
-var orders = [
-    {
-        "code": "1gz2a4b",
-        "service": service,
-        "client": client,
-        "status": "em andamento",
-        "description": "Óticas Diniz - Reparo na armação"
-    },
-    {
-        "code": "1g42a4b",
-        "service": service,
-        "client": client,
-        "status": "em andamento",
-        "description": "Gato & Sapato - Personalização de sandália"
-    },
-    {
-        "code": "1g52a4b",
-        "service": service,
-        "client": client,
-        "status": "em andamento",
-        "description": "Gráfica Copiar - Confecção das comandas"
-    },
-    {
-        "code": "1gz2y4b",
-        "service": service,
-        "client": client,
-        "status": "em andamento",
-        "description": "Laboratórios Bem Estar - Exame de sangue"
-    },
-]

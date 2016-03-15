@@ -5,6 +5,8 @@ var Service = require('../models/service.js');
 var Notification = require('../models/notification.js');
 var Order = require('../models/order.js')
 var router = express.Router();
+var ObjectId = require('mongoose').Types.ObjectId;
+
 
 router.get('/',function (req,res){
    res.send("OK");
@@ -224,8 +226,8 @@ var notifications = [{
 	"notification_date": new Date()
 }];
 
-var client = "1";
-var service = "2";
+var client =  new ObjectId("56e809e842046b891eb6a125");
+var service = new ObjectId("56e809e842046b891eb6a128");
 var orders = [
     {
         "code": "1gz2a4b",
@@ -235,7 +237,7 @@ var orders = [
         "description": "Óticas Diniz - Reparo na armação"
     },
     {
-        "code": "1g42a4b",
+        "code": "1g42a4C",
         "service": service,
         "client": client,
         "status": "em andamento",
@@ -254,5 +256,4 @@ var orders = [
         "client": client,
         "status": "em andamento",
         "description": "Laboratórios Bem Estar - Exame de sangue"
-    },
-]
+    }];
