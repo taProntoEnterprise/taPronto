@@ -1,18 +1,26 @@
 import { Component } from 'angular2/core';
+import { ServiceService } from './service.service';
 import { RequestOptions } from 'angular2/http';
 import { AlertService } from './alert.service';
 
 @Component({
 	selector: 'add-service',
-  	templateUrl: 'views/addService.html'
+  	templateUrl: 'views/addService.html',
+  	providers: [ServiceService]
 })
 
 export class AddServiceComponent{
-	constructor(private _alertService: AlertService) { }
+	constructor(private _serviceService: ServiceService,
+	private _alertService: AlertService) { }
 
 	public newService = {
 		name: "",
 		description: ""
+	}
+	
+	afterSucessfulRegister() {
+		this._alertService.addSucessAlert("Serviço cadastrado com sucesso");
+		this.back();
 	}
 
 	back() {
@@ -20,6 +28,8 @@ export class AddServiceComponent{
 	}
 
 	registerService() {
-		this._alertService.addErrorAlert("Não implementado.");
+		this._serviceService.registerService(this.newService).subscribe(
+			service => this.afterSucessfulRegister(),
+			error => console.log(error));
 	}
 }

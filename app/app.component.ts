@@ -2,6 +2,7 @@ import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 import { LoginComponent } from './login.component';
 import { AddUserComponent } from './add-user.component';
+import { AddServiceComponent } from './add-service.component';
 import { Alert } from 'ng2-bootstrap/ng2-bootstrap';
 import { AlertService } from './alert.service';
 import { DashboardComponent } from './dashboard.component'
@@ -25,6 +26,11 @@ import { DashboardComponent } from './dashboard.component'
       path: '/user',  // path que aparece na URL
       name: 'AddUser', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
       component: AddUserComponent // Componente a ser utilizado, o route-outlet sera substituido por esse componente
+  },
+  {
+      path: '/service',  // path que aparece na URL
+      name: 'AddService', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
+      component: AddServiceComponent // Componente a ser utilizado, o route-outlet sera substituido por esse componente
   },
   {
       path: '/dashboard/...',  // path que aparece na URL
