@@ -63,9 +63,9 @@ router.post('/login',function(req,res){
 				res.send(JSON.stringify({"result":result,"error":error}));	
 			}
 		}else{
-			res.status(404);
-			error.code=404;
-			error.message="Not Found";
+			res.status(400);
+			error.code=400;
+			error.message="Bad Request";
 			res.send(JSON.stringify({"result":result,"error":error}));	
 		}
 	});
