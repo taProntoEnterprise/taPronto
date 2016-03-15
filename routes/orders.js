@@ -21,27 +21,45 @@ router.get('/',function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
             }
 	});
-
-
 });
 
 router.get(/\/order\/(\w+)$/,function(req,res){
 	var error = {};
 	var result = {};
-	var orderId = new ObjectId(req.params[0]);
+	var orderCode = new String(req.params[0]);
 
-	Order.findOne({_id:orderId},function(err,doc){
+	Order.findOne({code:orderCode},function(err,doc){
 		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
 
-            }else{
-                result = doc;
-                res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
-            }
+        }else{
+            result = orders;//doc;
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+});
+
+router.get(/\/orderByClient\/(\w+)$/,function(req,res){
+	var error = {};
+	var result = {};
+	var clientId = new ObjectId(req.params[0]);
+
+	Order.find({_id:clientId},function(err,doc){
+		if(err){
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
+
+        }else{
+            result = doc;
+            res.contentType('application/json');
+            res.send(JSON.stringify({"result":result, "error":error}));
+        }
 	});
 });
 
@@ -62,3 +80,36 @@ router.post('/addorder', function(req, res) {
 });
 
 module.exports = router;
+
+var client = "1";
+var service = "2";
+var orders = [
+    {
+        "code": "1gz2a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Óticas Diniz - Reparo na armação"
+    },
+    {
+        "code": "1g42a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Gato & Sapato - Personalização de sandália"
+    },
+    {
+        "code": "1g52a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Gráfica Copiar - Confecção das comandas"
+    },
+    {
+        "code": "1gz2y4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Laboratórios Bem Estar - Exame de sangue"
+    },
+]

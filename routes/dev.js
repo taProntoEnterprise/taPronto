@@ -3,6 +3,7 @@ var User = require('../models/user.js');
 var Person = require('../models/person.js');
 var Service = require('../models/service.js');
 var Notification = require('../models/notification.js');
+var Order = require('../models/order.js')
 var router = express.Router();
 
 router.get('/',function (req,res){
@@ -69,6 +70,25 @@ router.get('/populatenotifications', function(req, res) {
     res.send(JSON.stringify({"result": result, "error": error}));
 });
 
+//FIXME: RODA, MAS NAO POPULA, PQ?
+router.get('/populateorders', function(req, res) {
+    var error= {};
+    var result = {};
+    for(var i=0;i<=orders.length;i++){
+        var order = new Order(orders[i]);
+        order.save(function(err) {
+            if (err) {
+                error.code = err.code;
+                error.message = err.message;
+                error.code == 11000 ? res.status(409) : res.status(500);
+               // break;
+            }else{
+              res.status(201);
+          }
+      });
+    }
+    res.send(JSON.stringify({"result": result, "error": error}));
+});
 
 router.get('/drop',function(req,res){
    var error= {};
@@ -203,3 +223,36 @@ var notifications = [{
 	}),
 	"notification_date": new Date()
 }];
+
+var client = "1";
+var service = "2";
+var orders = [
+    {
+        "code": "1gz2a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Óticas Diniz - Reparo na armação"
+    },
+    {
+        "code": "1g42a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Gato & Sapato - Personalização de sandália"
+    },
+    {
+        "code": "1g52a4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Gráfica Copiar - Confecção das comandas"
+    },
+    {
+        "code": "1gz2y4b",
+        "service": service,
+        "client": client,
+        "status": "em andamento",
+        "description": "Laboratórios Bem Estar - Exame de sangue"
+    },
+]
