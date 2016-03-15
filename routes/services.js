@@ -19,10 +19,9 @@ router.get('/',function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
             }
 	});
-
-
 });
-router.post('/addservice', function(req, res) {
+
+router.post('/registerService', function(req, res) {
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
