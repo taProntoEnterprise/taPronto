@@ -1,5 +1,6 @@
 var express = require('express');
 var User = require('../models/user.js');
+var Provider = require('../models/provider.js');
 var Person = require('../models/person.js');
 var Service = require('../models/service.js');
 var Notification = require('../models/notification.js');
@@ -25,11 +26,56 @@ router.get('/populate', function(req, res) {
                 //break;
             }else{
               res.status(201);
+			  res.send(JSON.stringify({"result": result, "error": error}));
           }
       });
     }
+});
 
-    res.send(JSON.stringify({"result": result, "error": error}));
+router.get('/populateproviders', function(req, res) {
+    var error= {};
+    var result = {};
+    for(var i=0;i<providers.length;i++){
+        var provider = new Provider(providers[i]);
+		var user = new User({"username": "testProvider"+i, "password": "testProvider"+i});
+		user.save(function(err) {
+            if (err) {
+                error.code = err.code;
+                error.message = err.message;
+                error.code == 11000 ? res.status(409) : res.status(500);
+				res.send(JSON.stringify({"result": result, "error": error}));
+                //break;
+            }else{
+			  provider.user = user._id;
+              provider.save(function(err) {
+				    console.log(provider);
+					if (err) {
+						error.code = err.code;
+						error.message = err.message;
+						error.code == 11000 ? res.status(409) : res.status(500);
+						res.send(JSON.stringify({"result": result, "error": error}));
+						//break;
+					}else{
+						result = provider;
+						res.contentType('application/json');
+						res.status(201);
+						User.findById(user.id, function(err,doc){
+							if(err){
+									res.contentType('application/json');
+									res.status(404);
+									error.code = err.code;
+									error.message = err.message;
+							} else {
+									doc.provider = provider.id;
+									doc.save();
+							}
+							res.send(JSON.stringify({"result":result, "error":error}));
+						});
+				  }
+			  });
+          }
+		});
+    }
 });
 
 router.get('/populateservices', function(req, res) {
@@ -257,3 +303,14 @@ var orders = [
         "status": "em andamento",
         "description": "Laboratórios Bem Estar - Exame de sangue"
     }];
+
+var providers = [
+	{
+		"name": "Empresa Teste",
+		"phones": ["99999999"],
+		"adresses": ["Rua Argentina, 2323"],
+		"documentType": "CNPJ",
+		"documentNumber": "2727346782364",
+		"emails": ["sddhs@sdsd.com"]
+	}
+];
