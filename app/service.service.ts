@@ -9,10 +9,10 @@ import {Observable} from 'rxjs/Observable';
 export class ServiceService {
 	constructor(private http: Http) { }
 
-	private _newServiceUrl = 'http://localhost:3000/services/registerService';
+	private _newServiceUrl = 'http://tapronto1.herokuapp.com/services/registerService';
 	
 	getServices() {
-    return this.http.get('http://localhost:3001/services')
+    return this.http.get('https://tapronto1.herokuapp.com/services')
                   .map(res => res.json());
   }
 	
