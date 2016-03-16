@@ -18,17 +18,17 @@ router.get('/',function(req,res){
             }else{
                 result = doc;
                 res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
             }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
 router.get(/\/order\/(\w+)$/,function(req,res){
 	var error = {};
 	var result = {};
-	var orderCode = new String(req.params[0]);
+	var idClient = new ObjectId(req.params[0]);
 
-	Order.findOne({code:orderCode},function(err,doc){
+	Order.findOne({client:idClient},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
