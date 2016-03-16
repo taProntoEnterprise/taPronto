@@ -12,16 +12,17 @@ export class ServiceService {
 	private _newServiceUrl = 'http://localhost:3000/services/registerService';
 	
 	getServices() {
-    return this.http.get('http://localhost:3001/services')
-                  .map(res => res.json());
-  }
-	
+    return this.http.get('http://localhost:3000/services')
+                  .map(res => res.json().result)
+				  .catch(this.handleError);
+	}
+
 	registerService(newService : Object){
 		let body = JSON.stringify(newService);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._newServiceUrl, body, options)
-			.map(res => <Object>res.json().data)
+			.map(res => <Object>res.json().result)
 			.catch(this.handleError)
 	}
 

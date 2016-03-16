@@ -18,7 +18,8 @@ export class UserService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._loginUrl, body, options)
-			.map(res => <Object>res.json().data)
+			.map(res => this.mapUser(<Object>res.json().result.data))
+			.do(data => console.log(data))
 			.catch(this.handleError)
 	}
 
@@ -27,12 +28,25 @@ export class UserService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._newUserUrl, body, options)
-			.map(res => <Object>res.json().data)
-			.catch(this.handleError)
+			.map(res => <Object>res.json().result.data)
+			.do(data => console.log(data))
+			.catch(this.handleError);
+	}
+
+	mapUser(user) {
+		var loggedUser: User = {
+			"id" : user._id,
+			"username": user.username,
+			"person": user.peron,
+			"provider": user.provider
+		};
+		LOGGED_USER = loggedUser;
+		return loggedUser;
 	}
 
  	private handleError (error: Response) {
-	   console.error(error);
 	   return Observable.throw(error.json().error || 'Server error');
 	}
 }
+
+export var LOGGED_USER : User;

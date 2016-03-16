@@ -11,5 +11,5 @@ var ServiceSchema = new mongoose.Schema
 }
 
 );
-ServiceSchema.index({key:1},{unique:true});
+ServiceSchema.index({name:1},{unique:false});
 module.exports = mongoose.model("Service",ServiceSchema);

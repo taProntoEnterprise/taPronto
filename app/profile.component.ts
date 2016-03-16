@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {LOGGED_USER} from './user.service';
 
 
 // Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
@@ -11,4 +12,6 @@ import {Component} from 'angular2/core';
 
 // Aqui eh a função em si do controller/diretiva
 export class ProfileComponent {
+
+	public user = LOGGED_USER;
 }

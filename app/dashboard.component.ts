@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, Inject, provide} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angular2/router';
 import { ServiceComponent } from './service-list.component';
 import { OrderComponent } from './order.component';
@@ -7,12 +7,14 @@ import { HelpComponent } from './help.component';
 import { AddServiceComponent } from './add-service.component'
 import { NgClass } from 'angular2/common';
 import { AlertService } from './alert.service'
+import { User } from './user';
+import {UserService, LOGGED_USER} from './user.service';
 
 @Component({
   selector: "dashboard",
   templateUrl: 'views/dashboard.html',
   directives: [ROUTER_DIRECTIVES, NgClass]
-}) 
+})
 
 // Router config da vida, onde coloca as views e o path de cada uma dela
 
@@ -47,7 +49,7 @@ import { AlertService } from './alert.service'
 
 export class DashboardComponent {
   constructor(private _router: Router,
-      private _alertService: AlertService ) {}
+    private _alertService: AlertService) {}
 
   public currentRoute = "Service";
 
