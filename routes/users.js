@@ -76,7 +76,6 @@ router.post('/receivednotifications',function(req,res){
 	var error = {};
 	var result = {};
 	var personId = mongoose.Types.ObjectId(req.body.person);
-	console.log("peguei o OID "+ personId);
 	Notification.find({notified:personId},function(err,doc){
 		if(err){
                 res.contentType('application/json');
