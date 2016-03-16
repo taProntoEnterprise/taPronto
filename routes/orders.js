@@ -36,7 +36,7 @@ router.get(/\/order\/(\w+)$/,function(req,res){
             error.message = err.message;
 
         }else{
-            result = orders;//doc;
+            result = doc;
             res.contentType('application/json');
         }
         res.send(JSON.stringify({"result":result, "error":error}));
