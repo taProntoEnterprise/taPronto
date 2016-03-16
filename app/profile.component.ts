@@ -1,7 +1,9 @@
 import {Component, OnInit} from 'angular2/core';
 import {LOGGED_USER} from './user.service';
+import { Router } from 'angular2/router';
 import {ProviderService} from './provider.service';
 import {AlertService} from './alert.service';
+import { Provider } from './provider';
 
 
 // Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
@@ -16,14 +18,15 @@ import {AlertService} from './alert.service';
 // Aqui eh a função em si do controller/diretiva
 export class ProfileComponent implements OnInit {
 	constructor(private _providerService: ProviderService,
-		private _alertService: AlertService) { }
+		private _alertService: AlertService,
+		private _router : Router) { }
 	public user = LOGGED_USER;
 
 
 	public provider = {
-		"phones" : ["phone"],
-		"addresses" : ["address"],
-		"emails" : ["email"]
+		"phones" : [],
+		"addresses" : [],
+		"emails" : []
 	}
 
 	addNewPhone() {
@@ -38,10 +41,21 @@ export class ProfileComponent implements OnInit {
 		this.provider.emails.push("");
 	}
 
-	registerProvider(){
-		this._providerService.registerProvider(this.provider).subscribe(
-			provider => this.provider = provider,
-			error => this.alertaErro(error))
+	afterRegister(provider){
+		this.provider = provider;
+		LOGGED_USER.provider = provider._id;
+ 		this._router.navigate(["Service"]);
+		this._alertService.addSucessAlert("Dados do fornecedor cadastrados com sucesso.");
+	}
+
+	registerProvider() {
+		if(this.provider.phones.length <= 0){
+			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um telefone de contato.");
+		} else {
+			this._providerService.registerProvider(this.provider).subscribe(
+				provider => this.afterRegister(provider),
+				error => this.alertaErro(error))
+		}
 	}
 
 	getProvider(){
@@ -49,11 +63,18 @@ export class ProfileComponent implements OnInit {
 			provider => this.provider = provider,
 			error => this.alertaErro(error))
 	}
-		alertaErro(error){
+
+	alertaErro(error){
 		this._alertService.addErrorAlert(error.message);
 	}
 
 	ngOnInit() {
-		this.getProvider();
+		if(LOGGED_USER.id !== undefined){
+			this.getProvider();
+		}
+	}
+
+	hasProvider() {
+		return LOGGED_USER.provider !== undefined;
 	}
 }

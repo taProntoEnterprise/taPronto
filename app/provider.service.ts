@@ -13,7 +13,7 @@ export class ProviderService {
 	private _providersUrl = 'http://localhost:3000/providers/';
 	
 	getServices() {
-		var uri = this._providersUrl + LOGGED_USER.id 
+		var uri = this._providersUrl + LOGGED_USER.provider 
 		return this.http.get(uri)
                   .map(res => res.json().result)
 				  .catch(this.handleError);

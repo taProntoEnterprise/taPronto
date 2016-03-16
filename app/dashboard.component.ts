@@ -1,4 +1,4 @@
-import { Component, Inject, provide} from 'angular2/core';
+import { Component, OnInit} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angular2/router';
 import { ServiceComponent } from './service-list.component';
 import { OrderComponent } from './order.component';
@@ -47,7 +47,7 @@ import {UserService, LOGGED_USER} from './user.service';
     }
 ])
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   constructor(private _router: Router,
     private _alertService: AlertService) {}
 
@@ -58,11 +58,26 @@ export class DashboardComponent {
   }
 
   public goTo(route : string){
-    if(route == 'Inicio'){
-      this._alertService.addErrorAlert("Não implementado")
+    if(route == 'Inicio' || route == "Help" || route =="Order"){
+      this._alertService.addErrorAlert("Não implementado.")
     } else {
-      this._router.navigate([route]);
-      this.currentRoute = route;
+      if(this.hasProvider()){
+        this._router.navigate([route]);
+        this.currentRoute = route;
+      } else {
+       this._alertService.addErrorAlert("O cadastro de fornecedor é necessario para continuar.")
+      }
     }
+  }
+
+  ngOnInit() {
+    if (!this.hasProvider()){
+      this.currentRoute = "Profile";
+      this._router.navigate(["Profile"]);
+    }
+  }
+
+  hasProvider() {
+    return LOGGED_USER.provider !== undefined;
   }
 } 
