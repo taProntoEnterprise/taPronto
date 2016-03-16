@@ -28,7 +28,7 @@ router.get(/\/order\/(\w+)$/,function(req,res){
 	var result = {};
 	var idClient = new ObjectId(req.params[0]);
 
-	Order.findOne({client:idClient},function(err,doc){
+	Order.find({client:idClient},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
@@ -58,8 +58,8 @@ router.get(/\/orderByClient\/(\w+)$/,function(req,res){
         }else{
             result = doc;
             res.contentType('application/json');
-            res.send(JSON.stringify({"result":result, "error":error}));
         }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
