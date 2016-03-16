@@ -48,7 +48,7 @@ router.get(/\/orderByClient\/(\w+)$/,function(req,res){
 	var result = {};
 	var clientId = new ObjectId(req.params[0]);
 
-	Order.find({_id:clientId},function(err,doc){
+	Order.find({client:clientId},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
