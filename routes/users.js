@@ -55,6 +55,7 @@ router.post('/login',function(req,res){
 			if(doc.verifyPass(password)){
 				res.status(200);
 				result.code=200;
+				result.data = doc;
 				res.send(JSON.stringify({"result":result,"error":error}));
 			}else{
 				res.status(401);

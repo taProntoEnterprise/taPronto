@@ -30,6 +30,10 @@ export class AddServiceComponent{
 	registerService() {
 		this._serviceService.registerService(this.newService).subscribe(
 			service => this.afterSucessfulRegister(),
-			error => console.log(error));
+			error => this.alertaErro(error));
+	}
+
+	alertaErro(error){
+		this._alertService.addErrorAlert(error.message);
 	}
 }

@@ -18,7 +18,7 @@ var UserSchema = new mongoose.Schema
 //	scrypt.hash(user.password,{"N":16,"r":1,"p":1},64,"",function (err,hash) {
 //		if(err){return next(err);}
 //		user.password = hash.toString('hex');
-//		next(); 
+//	next(); 
 //	}); 
 //});
 
