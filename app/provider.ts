@@ -3,7 +3,7 @@ export interface Provider {
 	phones: string[];
 	documentType: string;
 	documentNumber: string;
-	adresses: string[];
+	addresses: string[];
 	emails: string[];
 	description: string;
 } 

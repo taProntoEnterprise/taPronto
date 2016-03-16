@@ -6,7 +6,7 @@ var ProviderSchema = new mongoose.Schema
 	phones: [String],
 	documentType: [String],
 	documentNumber: {type:String},
-	adresses: [String],
+	addresses: [String],
 	emails: [String],
 	description: [String],
 	user: {type:mongoose.Schema.Types.ObjectId, ref:"User"}

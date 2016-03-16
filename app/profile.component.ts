@@ -14,4 +14,23 @@ import {LOGGED_USER} from './user.service';
 export class ProfileComponent {
 
 	public user = LOGGED_USER;
+
+
+	public provider = {
+		"phones" : ["phone"],
+		"addresses" : ["address"],
+		"emails" : ["email"]
+	}
+
+	addNewPhone() {
+		this.provider.phones.push("");
+	}
+
+	addNewAddress() {
+		this.provider.addresses.push("");
+	}
+
+	addNewEmail() {
+		this.provider.emails.push("");
+	}
 }
