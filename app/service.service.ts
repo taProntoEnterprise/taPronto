@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 export class ServiceService {
 	constructor(private http: Http) { }
 
-	private _newServiceUrl = 'http://tapronto1.herokuapp.com/services/registerService';
+	private _newServiceUrl = 'https://tapronto1.herokuapp.com/services/registerService';
 	
 	getServices() {
     return this.http.get('https://tapronto1.herokuapp.com/services')

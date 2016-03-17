@@ -10,7 +10,7 @@ import { LOGGED_USER } from './user.service';
 export class ProviderService {
 	constructor(private http: Http) { }
 
-	private _providersUrl = 'http://localhost:3000/providers/';
+	private _providersUrl = 'https://tapronto1.herokuapp.com/providers/';
 	
 	getServices() {
 		var uri = this._providersUrl + LOGGED_USER.provider 
