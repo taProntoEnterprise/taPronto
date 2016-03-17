@@ -14,7 +14,8 @@ var ProviderSchema = new mongoose.Schema
 
 ProviderSchema.pre('save',function (next) {
 	var provider = this;
-	if (provider.phones.length === 0) {
+	if (provider.phones.length === 0
+		|| provider.phones[0].length === 0) {
 		var error = new Error('Provider must have one phone number at least.');
 		error.code = 400;
 		return next(error);
