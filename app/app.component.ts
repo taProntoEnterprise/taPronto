@@ -28,11 +28,6 @@ import { DashboardComponent } from './dashboard.component'
       component: AddUserComponent // Componente a ser utilizado, o route-outlet sera substituido por esse componente
   },
   {
-      path: '/service',  // path que aparece na URL
-      name: 'AddService', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
-      component: AddServiceComponent // Componente a ser utilizado, o route-outlet sera substituido por esse componente
-  },
-  {
       path: '/dashboard/...',  // path que aparece na URL
       name: 'Dashboard', // Nome oficial da rota, utilizado por anchor ou route.go, navigate, etc
       component: DashboardComponent // Componente a ser utilizado, o route-outlet sera substituido por esse componente

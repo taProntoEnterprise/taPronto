@@ -5,8 +5,7 @@ import { AlertService } from './alert.service';
 
 @Component({
 	selector: 'add-usuario',
-  	templateUrl: 'views/addUser.html',
-	providers: [UserService]
+  	templateUrl: 'views/addUser.html'
 })
 
 export class AddUserComponent{
@@ -30,6 +29,10 @@ export class AddUserComponent{
 	registerUser() {
 		this._userService.addUser(this.newUser).subscribe(
 			user => this.afterSucessfulRegister(),
-			error => console.log(error));
+			error => this.alertaErro(error));
+	}
+
+	alertaErro(error){
+		this._alertService.addErrorAlert(error.message);
 	}
 }

@@ -55,6 +55,7 @@ router.post('/login',function(req,res){
 			if(doc.verifyPass(password)){
 				res.status(200);
 				result.code=200;
+				result.data = doc;
 				res.send(JSON.stringify({"result":result,"error":error}));
 			}else{
 				res.status(401);
@@ -75,7 +76,6 @@ router.post('/receivednotifications',function(req,res){
 	var error = {};
 	var result = {};
 	var personId = mongoose.Types.ObjectId(req.body.person);
-	console.log("peguei o OID "+ personId);
 	Notification.find({notified:personId},function(err,doc){
 		if(err){
                 res.contentType('application/json');

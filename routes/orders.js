@@ -18,17 +18,17 @@ router.get('/',function(req,res){
             }else{
                 result = doc;
                 res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
             }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
 router.get(/\/order\/(\w+)$/,function(req,res){
 	var error = {};
 	var result = {};
-	var orderCode = new String(req.params[0]);
+	var orderId = new ObjectId(req.params[0]);
 
-	Order.findOne({code:orderCode},function(err,doc){
+	Order.find({_id:orderId},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
@@ -36,7 +36,7 @@ router.get(/\/order\/(\w+)$/,function(req,res){
             error.message = err.message;
 
         }else{
-            result = orders;//doc;
+            result = doc;
             res.contentType('application/json');
         }
         res.send(JSON.stringify({"result":result, "error":error}));
@@ -48,7 +48,7 @@ router.get(/\/orderByClient\/(\w+)$/,function(req,res){
 	var result = {};
 	var clientId = new ObjectId(req.params[0]);
 
-	Order.find({_id:clientId},function(err,doc){
+	Order.find({client:clientId},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
@@ -58,8 +58,8 @@ router.get(/\/orderByClient\/(\w+)$/,function(req,res){
         }else{
             result = doc;
             res.contentType('application/json');
-            res.send(JSON.stringify({"result":result, "error":error}));
         }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
