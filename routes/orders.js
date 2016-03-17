@@ -26,9 +26,9 @@ router.get('/',function(req,res){
 router.get(/\/order\/(\w+)$/,function(req,res){
 	var error = {};
 	var result = {};
-	var idClient = new ObjectId(req.params[0]);
+	var orderId = new ObjectId(req.params[0]);
 
-	Order.find({client:idClient},function(err,doc){
+	Order.find({_id:orderId},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
