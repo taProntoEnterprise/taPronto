@@ -298,28 +298,32 @@ var orders = [
         "service": service1,
         "client": client1,
         "status": "em andamento",
-        "description": "Óticas Diniz - Reparo na armação"
+        "description": "Óticas Diniz - Reparo na armação",
+        "price": 80
     },
     {
         "code": "1g42a4C",
         "service": service2,
         "client": client1,
         "status": "em andamento",
-        "description": "Gato & Sapato - Personalização de sandália"
+        "description": "Gato & Sapato - Personalização de sandália",
+        "price": 30
     },
     {
         "code": "1g52a4b",
         "service": service3,
         "client": client1,
         "status": "em andamento",
-        "description": "Gráfica Copiar - Confecção das comandas"
+        "description": "Gráfica Copiar - Confecção das comandas",
+        "price": 200
     },
     {
         "code": "1gz2y4b",
         "service": service4,
         "client": client1,
         "status": "em andamento",
-        "description": "Laboratórios Bem Estar - Exame de sangue"
+        "description": "Laboratórios Bem Estar - Exame de sangue",
+        "price": 9001
     }];
 
 var providers = [
