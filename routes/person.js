@@ -92,6 +92,7 @@ router.put('/',function (req,res) {
                 }else{
                     res.contentType('application/json');
                     res.status(200);
+                    updatedPerson._id=personId;
                     result.data=updatedPerson;
                 }
                 res.send(JSON.stringify({"result": result, "error": error}));
