@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var Person = require('../models/person.js');
 var User = require('../models/user.js');
@@ -62,4 +63,41 @@ router.post('/',function (req,res) {
 
 
 //TODO PUT
+
+router.put('/',function (req,res) {
+     var error = {};
+     var result = {};
+     var userId = req.query.userId;
+     var updatedPerson = new Person(req.body);
+
+     User.findById(userId,function (err,doc) {
+          if(err){
+            res.contentType('application/json');
+            res.status(500);
+            error.code=err.code;
+            error.message=err.message;
+          }else if(doc == null){
+            error.code(404);
+            error.message="User not found";
+          }else{
+            var personId=doc.person;
+            updatedPerson=updatedPerson.toObject();
+            delete updatedPerson._id;
+            Person.update({_id:personId},updatedPerson,{},function (err2,doc2){
+                if(err2){
+                    res.contentType('application/json');
+                    res.status(500);
+                    error.code=err2.code;
+                    error.message=err2.message;
+                }else{
+                    res.contentType('application/json');
+                    res.status(200);
+                    result.data=updatedPerson;
+                }
+                res.send(JSON.stringify({"result": result, "error": error}));
+            });
+          }
+     });
+});
+
 module.exports = router;
