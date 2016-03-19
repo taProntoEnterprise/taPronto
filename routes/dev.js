@@ -138,7 +138,7 @@ router.get('/populateorders', function(req, res) {
     res.send(JSON.stringify({"result": result, "error": error}));
 });
 
-router.get('/drop',function(req,res){
+router.get('/dropusers',function(req,res){
    var error= {};
    var result = {};
    User.remove(function(err){
