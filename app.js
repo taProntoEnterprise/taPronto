@@ -15,6 +15,7 @@ var notifications = require('./routes/notifications');
 var dev = require('./routes/dev');
 var orders = require('./routes/orders');
 var providers = require('./routes/providers');
+var person = require('./routes/person');
 
 var cors = require('cors');
 
@@ -51,6 +52,7 @@ app.use('/notifications', notifications);
 app.use('/dev',dev);
 app.use('/orders',orders);
 app.use('/providers',providers);
+app.use('/person',person);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
