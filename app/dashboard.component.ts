@@ -1,13 +1,14 @@
 import { Component, OnInit} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angular2/router';
-import { ServiceComponent } from './service-list.component';
-import { OrderComponent } from './order.component';
+import { ServiceComponent } from './service.component';
+import { OrderListComponent } from './order-list.component';
+import { AddOrderComponent } from './add-order.component';
 import { ProfileComponent } from './profile.component';
 import { HelpComponent } from './help.component';
 import { AddServiceComponent } from './add-service.component'
 import { NgClass } from 'angular2/common';
 import { AlertService } from './alert.service'
-import { User } from './user';
+import { User } from './models/user';
 import {UserService, LOGGED_USER} from './user.service';
 
 @Component({
@@ -31,10 +32,15 @@ import {UserService, LOGGED_USER} from './user.service';
       component: AddServiceComponent
     }, 
     {
-      path: '/order',  
+      path: '/order',
       name: 'Order', 
-      component: OrderComponent
+      component: OrderListComponent
     },
+    {
+      path: '/addOrder',
+      name: 'AddOrder',
+      component: AddOrderComponent
+    }, 
     {
       path: '/profile',  
       name: 'Profile', 
@@ -58,7 +64,7 @@ export class DashboardComponent implements OnInit{
   }
 
   public goTo(route : string){
-    if(route == 'Inicio' || route == "Help" || route =="Order"){
+    if(route == 'Inicio' || route == "Help"){
       this._alertService.addErrorAlert("Não implementado.")
     } else {
       if(this.hasProvider()){

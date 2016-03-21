@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Service} from './service';
+import {Service} from './models/service';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 

@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Provider} from './provider';
+import {Provider} from './models/provider';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import { LOGGED_USER } from './user.service';

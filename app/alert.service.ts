@@ -7,7 +7,7 @@ export class AlertService {
 
 	public alerts : Array<Object> = [];
 
-	public addSucessAlert(msg : string){
+	public addSuccessAlert(msg : string){
 		this.addAlert('success', msg);
 	}
 

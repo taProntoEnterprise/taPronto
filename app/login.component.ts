@@ -1,5 +1,5 @@
 import {Component, OnInit, Injector, provide} from 'angular2/core';
-import {User} from './user';
+import {User} from './models/user';
 import {UserService} from './user.service';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { AlertService } from './alert.service';

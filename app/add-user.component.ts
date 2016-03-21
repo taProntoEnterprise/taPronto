@@ -4,7 +4,7 @@ import { RequestOptions } from 'angular2/http';
 import { AlertService } from './alert.service';
 
 @Component({
-	selector: 'add-usuario',
+	selector: 'addUser',
   	templateUrl: 'views/addUser.html'
 })
 
@@ -21,14 +21,14 @@ export class AddUserComponent{
 		window.history.back();
 	}
 
-	afterSucessfulRegister() {
-		this._alertService.addSucessAlert("Usuario cadastrado com sucesso");
+	afterSuccessfulRegister() {
+		this._alertService.addSuccessAlert("Usuario cadastrado com sucesso");
 		this.back();
 	}
 
 	registerUser() {
 		this._userService.addUser(this.newUser).subscribe(
-			user => this.afterSucessfulRegister(),
+			user => this.afterSuccessfulRegister(),
 			error => this.alertaErro(error));
 	}
 

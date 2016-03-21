@@ -4,7 +4,7 @@ import { RequestOptions } from 'angular2/http';
 import { AlertService } from './alert.service';
 
 @Component({
-	selector: 'add-service',
+	selector: 'addService',
   	templateUrl: 'views/addService.html',
   	providers: [ServiceService]
 })
@@ -18,8 +18,8 @@ export class AddServiceComponent{
 		description: ""
 	}
 	
-	afterSucessfulRegister() {
-		this._alertService.addSucessAlert("Serviço cadastrado com sucesso");
+	afterSuccessfulRegister() {
+		this._alertService.addSuccessAlert("Serviço cadastrado com sucesso");
 		this.back();
 	}
 
@@ -29,7 +29,7 @@ export class AddServiceComponent{
 
 	registerService() {
 		this._serviceService.registerService(this.newService).subscribe(
-			service => this.afterSucessfulRegister(),
+			service => this.afterSuccessfulRegister(),
 			error => this.alertaErro(error));
 	}
 
