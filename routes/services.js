@@ -5,8 +5,9 @@ var router = express.Router();
 router.get('/',function(req,res){
 	var error = {};
 	var result = {};
+	var userId = req.query.userId;
 
-	Service.find(function(err,doc){
+	Service.find({provider:userId},function(err,doc){
 		if(err){
                 res.contentType('application/json');
                 res.status(500);
@@ -14,17 +15,40 @@ router.get('/',function(req,res){
                 error.message = err.message;
 
             }else{
-                result = doc;
+                result.data = doc;
                 res.contentType('application/json');
                 res.send(JSON.stringify({"result":result, "error":error}));
             }
 	});
 });
 
-router.post('/registerService', function(req, res) {
+router.get('/:serviceId',function(req,res){
+	var error = {};
+	var result = {};
+	var serviceId = req.params.serviceId;
+
+	Service.findOne({_id:serviceId},function(err,doc){
+		if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result.data = doc;
+                res.contentType('application/json');
+                res.send(JSON.stringify({"result":result, "error":error}));
+            }
+	});
+});
+
+router.post('/', function(req, res) {
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
+	var userId = req.query.userId;
+	service.provider = userId;
+
 	service.save(function(err) {
 		if (err) {
 			error.code = err.code;
@@ -35,6 +59,29 @@ router.post('/registerService', function(req, res) {
 		      res.status(201);
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
+	});
+});
+
+router.put('/:serviceId',function(req,res){
+	var result = {};
+	var error = {};
+	var serviceId = req.params.serviceId;
+	var newService = new Service(req.body).toObject();
+	delete newService._id;
+
+	Service.update({_id:serviceId},newService,{},function(err,doc){
+		if(err){
+			res.contentType('application/json');
+            res.status(500);
+            error.code=err.code;
+            error.message=err.message;
+		}else{
+			res.contentType('application/json');
+            res.status(200);
+            newService._id=serviceId;
+            result.data=newService;
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 

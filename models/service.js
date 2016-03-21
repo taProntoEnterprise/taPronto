@@ -6,7 +6,7 @@ var ServiceSchema = new mongoose.Schema
 (
 {
 	name:{type:String,required:true},
-	company:{type:String},
+	provider:{type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
 	description:{type:String}
 }
 
