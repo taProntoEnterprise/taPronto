@@ -7,27 +7,26 @@ var ObjectId = require('mongoose').Types.ObjectId;
 router.get('/',function(req,res){
 	var error = {};
 	var result = {};
+    var userId = req.query.userId;
 
-	Order.find(function(err,doc){
+	Order.find({client:userId},function(err,doc){
 		if(err){
                 res.contentType('application/json');
                 res.status(500);
                 error.code = err.code;
                 error.message = err.message;
-
             }else{
-                result = doc;
+                result.data = doc;
                 res.contentType('application/json');
             }
         res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
-router.get(/\/order\/(\w+)$/,function(req,res){
+router.get('/:orderId',function(req,res){
 	var error = {};
 	var result = {};
-	var orderId = new ObjectId(req.params[0]);
-
+	var orderId = req.params.orderId;
 	Order.find({_id:orderId},function(err,doc){
 		if(err){
             res.contentType('application/json');
@@ -36,38 +35,41 @@ router.get(/\/order\/(\w+)$/,function(req,res){
             error.message = err.message;
 
         }else{
-            result = doc;
+            result.data = doc;
             res.contentType('application/json');
         }
         res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
 
-router.get(/\/orderByClient\/(\w+)$/,function(req,res){
-	var error = {};
-	var result = {};
-	var clientId = new ObjectId(req.params[0]);
-
-	Order.find({client:clientId},function(err,doc){
-		if(err){
+router.put('/:orderId',function(req,res){
+    var result = {};
+    var error = {};
+    var newOrder = new Order(req.body).toObject();
+    delete newOrder._id;
+    var orderId = req.params.orderId;
+    Order.update({_id:orderId},newOrder,{},function(err,doc){
+        if(err){
             res.contentType('application/json');
             res.status(500);
-            error.code = err.code;
-            error.message = err.message;
-
+            error.code=err2.code;
+            error.message=err2.message;
         }else{
-            result = doc;
             res.contentType('application/json');
+            res.status(200);
+            newOrder._id=orderId;
+            result.data=newOrder;
         }
         res.send(JSON.stringify({"result":result, "error":error}));
-	});
+    });
 });
 
-router.post('/addorder', function(req, res) {
+router.post('/', function(req, res) {
 	var new_order = new Order(req.body);
-	console.log(new_order);
 	var error= {};
 	var result = {};
+    var userId = req.query.userId;
+    new_order.client=userId;
 	new_order.save(function(err) {
 		if (err) {
 			error.code = err.code;
