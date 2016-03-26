@@ -137,7 +137,7 @@ router.get('/populateorders', function(req, res) {
     res.send(JSON.stringify({"result": result, "error": error}));
 });
 
-router.get('/drop',function(req,res){
+router.get('/dropusers',function(req,res){
    var error= {};
    var result = {};
    User.remove(function(err){
@@ -193,13 +193,14 @@ router.get('/droporders',function(req,res){
             error.code = err.code;
             error.message = err.message;
             error.code == 11000 ? res.status(409) : res.status(500);
-            berak;
         }else{
           res.status(201);
         }
+        res.send(JSON.stringify({"result": result, "error": error}));
     });
-   res.send(JSON.stringify({"result": result, "error": error}));
 });
+
+
 
 module.exports = router;
 

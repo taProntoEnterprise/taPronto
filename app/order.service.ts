@@ -1,29 +1,28 @@
 import { Injectable } from 'angular2/core';
-import { Service } from './models/service';
+import { Order } from './models/order';
 import { LOGGED_USER } from './user.service';
 import { Http, Response, RequestOptions, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
-export class ServiceService {
+export class OrderService {
 	constructor(private http: Http) { }
 
+	private _orderUrl = 'http://localhost:3000/orders/' + "?userId=" + LOGGED_USER.id;
 
-	private _serviceUrl = 'https://tapronto1.herokuapp.com/services/' + "?userId=" + LOGGED_USER.id;
-
-	getServices() {
-		return this.http.get(this._serviceUrl)
+	getOrders() {
+		return this.http.get(this._orderUrl)
 		.map(res => <Array<Object>>res.json().result.data)
 		.do(res => console.log(res))
 		.catch(this.handleError);
 	}
 
-	registerService(newService : Object){
-		let body = JSON.stringify(newService);
+	registerOrder(newOrder : Object){
+		let body = JSON.stringify(newOrder);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(this._serviceUrl, body, options)
+		return this.http.post(this._orderUrl, body, options)
 			.map(res => <Object>res.json().result.data)
 			.catch(this.handleError);
 	}

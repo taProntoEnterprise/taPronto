@@ -1,13 +1,11 @@
 import {Injectable} from 'angular2/core';
 
-
-// Velho e bom service do Angular
 @Injectable() // <-- Fucking necessarios esses parenteses, foi dito umas 3 vzs para sempre colocar eles, entao deve ser importante
 export class AlertService {
 
 	public alerts : Array<Object> = [];
 
-	public addSucessAlert(msg : string){
+	public addSuccessAlert(msg : string){
 		this.addAlert('success', msg);
 	}
 

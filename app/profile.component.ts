@@ -1,9 +1,9 @@
-import {Component, OnInit} from 'angular2/core';
-import {LOGGED_USER} from './user.service';
+import { Component, OnInit } from 'angular2/core';
+import { LOGGED_USER } from './user.service';
 import { Router } from 'angular2/router';
-import {ProviderService} from './provider.service';
-import {AlertService} from './alert.service';
-import { Provider } from './provider';
+import { ProviderService } from './provider.service';
+import { AlertService } from './alert.service';
+import { Provider } from './models/provider';
 
 
 // Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
@@ -26,11 +26,19 @@ export class ProfileComponent implements OnInit {
 	public addresses = [];
 	public emails = [];
 	
-	public provider = {}
+	public provider : Provider = {
+		"name" : "",
+		phones: [],
+		documentType: "",
+		documentNumber: "",
+		addresses: [],
+		emails: [],
+		description :  ""
+	}
 	
 	extractValuesFromList(list) {
 		var newList = [];
-		for (var i=0; i<list.length; i++) {
+		for (var i=0; i < list.length; i++) {
 			if (list[i].value !== undefined && list[i].value.trim() !== "") {
 				newList.push(list[i].value);
 			}
@@ -41,7 +49,7 @@ export class ProfileComponent implements OnInit {
 	getValuesFromList(list) {
 		var newList = [];
 		if (list !== undefined) {
-			for (var i=0; i<list.length; i++) {
+			for (var i=0; i < list.length; i++) {
 				newList.push({value:list[i]});
 			}
 		}
@@ -64,7 +72,7 @@ export class ProfileComponent implements OnInit {
 		this.provider = provider;
 		LOGGED_USER.provider = provider._id;
  		this._router.navigate(["Service"]);
-		this._alertService.addSucessAlert("Dados do fornecedor cadastrados com sucesso.");
+		this._alertService.addSuccessAlert("Dados do fornecedor cadastrados com sucesso.");
 	}
 
 	registerProvider() {
@@ -81,10 +89,12 @@ export class ProfileComponent implements OnInit {
 	}
 	
 	afterGetProvider(provider) {
-		this.provider = provider;
-		this.phones = this.getValuesFromList(provider.phones);
-		this.emails = this.getValuesFromList(provider.emails);
-		this.addresses = this.getValuesFromList(provider.addresses);
+		if(provider !== null){
+			this.provider = provider;
+			this.phones = this.getValuesFromList(provider.phones);
+			this.emails = this.getValuesFromList(provider.emails);
+			this.addresses = this.getValuesFromList(provider.addresses);
+		}
 	}
 
 	getProvider(){

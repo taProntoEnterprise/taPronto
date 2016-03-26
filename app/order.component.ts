@@ -1,14 +1,31 @@
-import {Component} from 'angular2/core';
+import { Component, OnInit, Input } from 'angular2/core';
+import { Router } from 'angular2/router';
+import { AlertService } from './alert.service';
+import { Order } from './models/order';
+import { OrderService } from './order.service';
+import { OrderListComponent } from './order-list.component';
 
-
-// Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
-// por isso é chamado de componente agora, um componente pode ter outros componentes
-// e acessarem 'certas' coisas deles. Bem vago.
 @Component({
-    selector: 'order', // nome utilizado no HTML para importar a diretiva
-    templateUrl: 'views/order.html'
+    selector: 'order',
+    templateUrl: 'views/order.html',
+    providers: [OrderService],
+	directives: [OrderListComponent]
 })
 
-// Aqui eh a função em si do controller/diretiva
-export class OrderComponent {
+export class OrderComponent implements OnInit {
+	constructor(private _router: Router,
+		private _alertService: AlertService,
+		private _orderService: OrderService) { }
+
+	public orderList;
+
+	goToRegisterOrder() {
+		this._router.navigate(['AddOrder']);
+	}
+	
+	ngOnInit() {
+		this._orderService.getOrders().subscribe(
+			orders => this.orderList = orders,
+			error => console.log(error));
+	}
 }

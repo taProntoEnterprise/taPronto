@@ -1,16 +1,14 @@
 import {Injectable} from 'angular2/core';
-import {User} from './user';
+import {User} from './models/user';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 
-
-// Velho e bom service do Angular
-@Injectable() // <-- Fucking necessarios esses parenteses, foi dito umas 3 vzs para sempre colocar eles, entao deve ser importante
+@Injectable() 
 export class UserService {
 	constructor(private http: Http) { }
 
 	private _loginUrl = 'https://tapronto1.herokuapp.com/users/login';
-	private _newUserUrl = 'https://tapronto1.herokuapp.com/users/adduser';
+	private _newUserUrl = 'https://tapronto1.herokuapp.com/users';
 	
 
 	login(loginUser : Object) {

@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Provider} from './provider';
+import {Provider} from './models/provider';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import { LOGGED_USER } from './user.service';
@@ -10,22 +10,20 @@ import { LOGGED_USER } from './user.service';
 export class ProviderService {
 	constructor(private http: Http) { }
 
-	private _providersUrl = 'https://tapronto1.herokuapp.com/providers/';
+	private _providersUrl = 'https://tapronto1.herokuapp.com/providers/' + "?userId=" + LOGGED_USER.id;
 	
 	getServices() {
-		var uri = this._providersUrl + LOGGED_USER.provider 
-		return this.http.get(uri)
-                  .map(res => res.json().result)
+		return this.http.get(this._providersUrl)
+                  .map(res => res.json().result.data)
 				  .catch(this.handleError);
 	}
 
 	registerProvider(newProvider){
-		var uri = this._providersUrl + LOGGED_USER.id + '/addprovider';
 		let body = JSON.stringify(newProvider);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(uri, body, options)
-                  .map(res => res.json().result)
+		return this.http.post(this._providersUrl, body, options)
+                  .map(res => res.json().result.data)
 				  .catch(this.handleError);
 	}
 
