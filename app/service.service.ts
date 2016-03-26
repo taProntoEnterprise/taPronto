@@ -1,29 +1,30 @@
-import {Injectable} from 'angular2/core';
-import {Service} from './models/service';
-import {Http, Response, RequestOptions, Headers} from 'angular2/http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from 'angular2/core';
+import { Service } from './models/service';
+import { LOGGED_USER } from './user.service';
+import { Http, Response, RequestOptions, Headers, URLSearchParams } from 'angular2/http';
+import { Observable } from 'rxjs/Observable';
 
 
-// Velho e bom service do Angular
-@Injectable() // <-- Fucking necessarios esses parenteses, foi dito umas 3 vzs para sempre colocar eles, entao deve ser importante
+@Injectable()
 export class ServiceService {
 	constructor(private http: Http) { }
 
-	private _newServiceUrl = 'http://localhost:3000/services/registerService';
-	
+	private _serviceUrl = 'http://localhost:3000/services/' + "?userId=" + LOGGED_USER.id;
+
 	getServices() {
-    return this.http.get('http://localhost:3000/services')
-                  .map(res => res.json().result)
-				  .catch(this.handleError);
+		return this.http.get(this._serviceUrl)
+		.map(res => <Array<Object>>res.json().result.data)
+		.do(res => console.log(res))
+		.catch(this.handleError);
 	}
 
 	registerService(newService : Object){
 		let body = JSON.stringify(newService);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(this._newServiceUrl, body, options)
-			.map(res => <Object>res.json().result)
-			.catch(this.handleError)
+		return this.http.post(this._serviceUrl, body, options)
+			.map(res => <Object>res.json().result.data)
+			.catch(this.handleError);
 	}
 
  	private handleError (error: Response) {
@@ -31,3 +32,5 @@ export class ServiceService {
 	   return Observable.throw(error.json().error || 'Server error');
 	}
 }
+
+

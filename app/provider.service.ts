@@ -10,22 +10,20 @@ import { LOGGED_USER } from './user.service';
 export class ProviderService {
 	constructor(private http: Http) { }
 
-	private _providersUrl = 'http://localhost:3000/providers/';
-	
+	private _providersUrl = 'http://localhost:3000/providers/' + "?userId="+ LOGGED_USER.id;
+
 	getServices() {
-		var uri = this._providersUrl + "?userId="+ LOGGED_USER.id 
-		return this.http.get(uri)
-                  .map(res => res.json().result)
+		return this.http.get(this._providersUrl)
+                  .map(res => res.json().result.data)
 				  .catch(this.handleError);
 	}
 
 	registerProvider(newProvider){
-		var uri = this._providersUrl + "?userId="+ LOGGED_USER.id;
 		let body = JSON.stringify(newProvider);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(uri, body, options)
-                  .map(res => res.json().result)
+		return this.http.post(this._providersUrl, body, options)
+                  .map(res => res.json().result.data)
 				  .catch(this.handleError);
 	}
 

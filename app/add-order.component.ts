@@ -18,11 +18,20 @@ export class AddOrderComponent implements OnInit {
 	public selectedService;
 	public serviceList;
 	public newOrder = {
-		description: ""
+		description: "",
+		price: 0
 	};
 
 	selectService(service){
 		this.selectedService = service;
+	}
+
+	deselectService() {
+		this.selectedService = undefined;
+	}
+
+	back() {
+		window.history.back();
 	}
 
 	hasSelectedService(){

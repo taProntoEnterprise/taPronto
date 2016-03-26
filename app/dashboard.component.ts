@@ -1,7 +1,7 @@
 import { Component, OnInit} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angular2/router';
 import { ServiceComponent } from './service.component';
-import { OrderListComponent } from './order-list.component';
+import { OrderComponent } from './order.component';
 import { AddOrderComponent } from './add-order.component';
 import { ProfileComponent } from './profile.component';
 import { HelpComponent } from './help.component';
@@ -34,7 +34,7 @@ import {UserService, LOGGED_USER} from './user.service';
     {
       path: '/order',
       name: 'Order', 
-      component: OrderListComponent
+      component: OrderComponent
     },
     {
       path: '/addOrder',

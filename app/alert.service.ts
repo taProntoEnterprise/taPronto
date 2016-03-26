@@ -1,7 +1,5 @@
 import {Injectable} from 'angular2/core';
 
-
-// Velho e bom service do Angular
 @Injectable() // <-- Fucking necessarios esses parenteses, foi dito umas 3 vzs para sempre colocar eles, entao deve ser importante
 export class AlertService {
 

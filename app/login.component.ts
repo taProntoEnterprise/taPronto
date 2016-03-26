@@ -30,7 +30,6 @@ export class LoginComponent {
 		this._router.navigate(["Dashboard"]);
 	}
 
-
 	errorLogin(error) {
 		if(error.code == 401){
 			this._alertService.addErrorAlert("O par usuario/senha é invalido.");

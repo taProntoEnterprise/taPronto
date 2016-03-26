@@ -46,6 +46,9 @@ router.post('/', function(req, res) {
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
+	console.log(req.query);
+	console.log("");
+	console.log(req.headers);
 	var userId = req.query.userId;
 	service.provider = userId;
 
