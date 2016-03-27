@@ -24,7 +24,6 @@ export class AddOrderComponent implements OnInit {
 	public newOrder = {
 		description: "",
 		price: 0,
-		code: this.dataAtual.getMilliseconds(),
 		service: undefined,
 		client: undefined,
 		status: "Em andamento"
