@@ -68,7 +68,7 @@
 	   		<label for = "providerEmail" class = "col-sm-2 control-label">Email {{i + 1}}</label>
 		  <div class = "col-sm-10">
 			<input type = "email" class = "form-control" id = "providerEmail" placeholder = "Novo Email"
-			 [(ngModel)]="emails[i].value" [disabled]="hasProvider()" ng-required ="i == 1"/>
+			 [(ngModel)]="emails[i].value" [disabled]="hasProvider()" />
 		  </div>	
  		</div>
 		<button type="button" class="btn btn-success pull-right" (click)="addNewEmail()" [disabled]="hasProvider()">Adicionar novo email</button>
