@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from 'angular2/core';
 import { LOGGED_USER } from './user.service';
 import { Router } from 'angular2/router';
@@ -57,7 +58,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	addNewPhone() {
-		this.phones.push({});
+	    this.phones.push({});
 	}
 
 	addNewAddress() {
@@ -81,6 +82,8 @@ export class ProfileComponent implements OnInit {
 		this.provider.addresses = this.extractValuesFromList(this.addresses);
 		if(this.provider.phones.length <= 0){
 			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um telefone de contato.");
+		} else if(this.provider.emails.length <= 0){
+			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um email.");
 		} else {
 			this._providerService.registerProvider(this.provider).subscribe(
 				provider => this.afterRegister(provider),
@@ -110,6 +113,8 @@ export class ProfileComponent implements OnInit {
 	ngOnInit() {
 		if(LOGGED_USER.id !== undefined){
 			this.getProvider();
+			this.addNewPhone();
+			this.addNewEmail();
 		}
 	}
 
