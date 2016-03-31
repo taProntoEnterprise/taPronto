@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 export class OrderService {
 	constructor(private http: Http) { }
 
-	private _orderUrl = 'http://localhost:3000/orders/' + "?userId=" + LOGGED_USER.id;
+	private _orderUrl = 'https://tapronto1.herokuapp.com/orders/' + "?userId=" + LOGGED_USER.id;
 
 	getOrders() {
 		return this.http.get(this._orderUrl)
