@@ -22,8 +22,14 @@ module.exports = function(req, res, next){
 				}
 			})
 
-		} catch (err) {			
-			return next()
+		} catch (err) {
+			result = {};
+			error = {};
+			res.status(403);			
+			error.message='Invalid Token';
+			error.code=403;
+			res.send(JSON.stringify({"result":result, "error":error}));
+
 		}
 
 	} else {
