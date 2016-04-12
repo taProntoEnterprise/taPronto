@@ -2,12 +2,13 @@ var express = require('express');
 var Order = require('../models/order.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
+var jwt = require('../routes/jwtauth.js');
 
 
-router.get('/',function(req,res){
+router.get('/', jwt, function(req,res){
 	var error = {};
 	var result = {};
-    var userId = req.query.userId;
+    var userId = req.user;
 
 	Order.find({client:userId},function(err,doc){
 		if(err){
