@@ -11,16 +11,17 @@ module.exports = function(req, res, next){
 			var decoded = jwt.decode(token, 'TA_PRONTO_PRA_PAGAR_P1')
 
 			if (decoded.exp <= Date.now()) {
-				res.end('Access token has expired', 400)				
+				res.status(403);
+				res.end('Access token has expired', 403)				
 			}
 
 			UserModel.findOne({ '_id': decoded.iss }, function(err, user){
 
 				if (!err) {					
 					req.user = user									
-					return next()
+					return next();
 				}
-			})
+			});
 
 		} catch (err) {
 			result = {};
@@ -33,8 +34,15 @@ module.exports = function(req, res, next){
 		}
 
 	} else {
+		//uncomment after only token based authentication is ready
+		//result = {};
+		//error = {};
+		//res.status(403);			
+	//	error.message='No token found';
+	//	error.code=403;
+	//	res.send(JSON.stringify({"result":result, "error":error}));
 
-		next()
+		next();
 
 	}
 };

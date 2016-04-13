@@ -10,6 +10,8 @@ router.get('/', jwt, function(req,res){
 	var result = {};
     var userId = req.user;
 
+    if(!userId){userId = req.query.userId;}
+
 	Order.find({client:userId},function(err,doc){
 		if(err){
                 res.contentType('application/json');
@@ -65,11 +67,14 @@ router.put('/:orderId',function(req,res){
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', jwt,function(req, res) {
 	var new_order = new Order(req.body);
 	var error= {};
 	var result = {};
-    var userId = req.query.userId;
+    var userId = req.user;
+
+    if(!userId){ userId = req.query.userId;}
+    
     new_order.client=userId;
 	new_order.save(function(err) {
 		if (err) {
