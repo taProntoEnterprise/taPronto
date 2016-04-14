@@ -1,11 +1,16 @@
 var express = require('express');
 var Service = require('../models/service.js');
 var router = express.Router();
+var jwt = require('../routes/jwtauth.js');
 
-router.get('/',function(req,res){
+
+router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-	var userId = req.query.userId;
+
+	var userId = req.user;
+	//remove after token based authentication is ready
+    if(!userId){ userId = req.query.userId;}
 
 	Service.find({provider:userId},function(err,doc){
 		if(err){
@@ -42,14 +47,16 @@ router.get('/:serviceId',function(req,res){
 	});
 });
 
-router.post('/', function(req, res) {
+router.post('/', jwt,function(req, res) {
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
-	console.log(req.query);
-	console.log("");
-	console.log(req.headers);
-	var userId = req.query.userId;
+	
+
+	var userId = req.user;
+	//remove after token based authentication is ready
+    if(!userId){ userId = req.query.userId;}
+
 	service.provider = userId;
 
 	service.save(function(err) {

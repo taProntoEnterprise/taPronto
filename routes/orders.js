@@ -2,12 +2,15 @@ var express = require('express');
 var Order = require('../models/order.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
+var jwt = require('../routes/jwtauth.js');
 
 
-router.get('/',function(req,res){
+router.get('/', jwt, function(req,res){
 	var error = {};
 	var result = {};
-    var userId = req.query.userId;
+    var userId = req.user;
+
+    if(!userId){userId = req.query.userId;}
 
 	Order.find({client:userId},function(err,doc){
 		if(err){
@@ -64,11 +67,14 @@ router.put('/:orderId',function(req,res){
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', jwt,function(req, res) {
 	var new_order = new Order(req.body);
 	var error= {};
 	var result = {};
-    var userId = req.query.userId;
+    var userId = req.user;
+
+    if(!userId){ userId = req.query.userId;}
+    
     new_order.client=userId;
 	new_order.save(function(err) {
 		if (err) {

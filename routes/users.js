@@ -3,6 +3,8 @@ var User = require('../models/user.js');
 var Notification = require('../models/notification.js');
 var Service = require('../models/service.js');
 var mongoose = require('mongoose');
+var jwt = require('jwt-simple');
+var moment = require('moment');
 var router = express.Router();
 
 router.post('/', function(req, res) {
@@ -36,9 +38,18 @@ router.post('/login',function(req,res){
 	User.findOne({username:username},function(err,doc){
 		if(doc){
 			if(doc.verifyPass(password)){
+				var expires = moment().add(1,'day').valueOf();
+				var token = jwt.encode({
+					iss:doc._id,
+					exp:expires 
+				},'TA_PRONTO_PRA_PAGAR_P1');
 				res.status(200);
 				result.code=200;
-				result.data = doc;
+				var data = doc.toObject();
+				delete data.password;
+				result.data = data;
+				result.token= token;
+				result.expires = expires;
 				res.send(JSON.stringify({"result":result,"error":error}));
 			}else{
 				res.status(401);
@@ -47,9 +58,9 @@ router.post('/login',function(req,res){
 				res.send(JSON.stringify({"result":result,"error":error}));	
 			}
 		}else{
-			res.status(400);
-			error.code=400;
-			error.message="Bad Request";
+			res.status(403);
+			error.code=403;
+			error.message="User Not Found";
 			res.send(JSON.stringify({"result":result,"error":error}));	
 		}
 	});
