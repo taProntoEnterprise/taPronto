@@ -27,6 +27,30 @@ router.post('/', function(req, res) {
 	});
 });
 
+router.get('/',function (req,res) {
+	var userName = req.query.username;
+	var error = {};
+	var result ={};
+
+	User.findOne({username:userName},function(err,doc){
+		if(err){
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
+        }else if(doc == null){
+        	res.contentType('application/json');
+            res.status(404);
+            error.message="User Not Found";
+    	}else{
+            var data = doc.toObject();
+            delete data.password;
+            result.data=data;
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+});
 
 router.post('/login',function(req,res){
 	var username = req.body.username;
