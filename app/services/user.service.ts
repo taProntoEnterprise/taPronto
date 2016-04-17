@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {User} from './models/user';
+import {User} from '../models/user';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 

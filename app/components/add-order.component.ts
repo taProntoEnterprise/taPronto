@@ -1,9 +1,9 @@
 import { Component, OnInit } from 'angular2/core';
-import { ServiceService } from './service.service';
-import { OrderService } from './order.service';
+import { ServiceService } from '../services/service.service';
+import { OrderService } from '../services/order.service';
 import { RequestOptions } from 'angular2/http';
-import { AlertService } from './alert.service';
-import { LOGGED_USER } from './user.service';
+import { AlertService } from '../services/alert.service';
+import { LOGGED_USER } from '../services/user.service';
 import { ServiceListComponent } from './service-list.component';
 import { ClientSelectComponet } from './client-select.component';
 

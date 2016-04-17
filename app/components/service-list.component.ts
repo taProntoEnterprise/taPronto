@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter} from 'angular2/core';
-import { AlertService } from './alert.service';
-import { Service } from './models/service';
+import { AlertService } from '../services/alert.service';
+import { Service } from '../models/service';
 
 @Component({
     selector: 'serviceList', 

@@ -7,9 +7,9 @@ import { ProfileComponent } from './profile.component';
 import { HelpComponent } from './help.component';
 import { AddServiceComponent } from './add-service.component'
 import { NgClass } from 'angular2/common';
-import { AlertService } from './alert.service'
-import { User } from './models/user';
-import { UserService, LOGGED_USER } from './user.service';
+import { AlertService } from '../services/alert.service'
+import { User } from '../models/user';
+import { UserService, LOGGED_USER } from '../services/user.service';
 
 @Component({
   selector: "dashboard",

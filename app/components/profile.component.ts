@@ -1,9 +1,9 @@
 import { Component, OnInit } from 'angular2/core';
-import { LOGGED_USER } from './user.service';
+import { LOGGED_USER } from '../services/user.service';
 import { Router } from 'angular2/router';
-import { ProviderService } from './provider.service';
-import { AlertService } from './alert.service';
-import { Provider } from './models/provider';
+import { ProviderService } from '../services/provider.service';
+import { AlertService } from '../services/alert.service';
+import { Provider } from '../models/provider';
 
 @Component({
     selector: 'profile', 

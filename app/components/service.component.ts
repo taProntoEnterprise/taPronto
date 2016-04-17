@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from 'angular2/core';
 import { Router } from 'angular2/router';
-import { AlertService } from './alert.service';
-import { Service } from './models/service';
-import { ServiceService } from './service.service';
+import { AlertService } from '../services/alert.service';
+import { Service } from '../models/service';
+import { ServiceService } from '../services/service.service';
 import { ServiceListComponent } from './service-list.component';
 
 @Component({
