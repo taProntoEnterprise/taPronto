@@ -30,7 +30,7 @@ router.get('/:orderId',function(req,res){
 	var error = {};
 	var result = {};
 	var orderId = req.params.orderId;
-	Order.find({_id:orderId},function(err,doc){
+	Order.findOne({_id:orderId},function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
