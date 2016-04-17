@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from 'angular2/core';
 import { LOGGED_USER } from './user.service';
 import { Router } from 'angular2/router';
@@ -6,17 +5,12 @@ import { ProviderService } from './provider.service';
 import { AlertService } from './alert.service';
 import { Provider } from './models/provider';
 
-
-// Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
-// por isso é chamado de componente agora, um componente pode ter outros componentes
-// e acessarem 'certas' coisas deles. Bem vago.
 @Component({
-    selector: 'profile', // nome utilizado no HTML para importar a diretiva
+    selector: 'profile', 
     templateUrl: 'views/profile.html',
     providers: [ProviderService]
 })
 
-// Aqui eh a função em si do controller/diretiva
 export class ProfileComponent implements OnInit {
 	constructor(private _providerService: ProviderService,
 		private _alertService: AlertService,

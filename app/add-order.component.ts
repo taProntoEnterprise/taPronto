@@ -5,12 +5,13 @@ import { RequestOptions } from 'angular2/http';
 import { AlertService } from './alert.service';
 import { LOGGED_USER } from './user.service';
 import { ServiceListComponent } from './service-list.component';
+import { ClientSelectComponet } from './client-select.component';
 
 @Component({
 	selector: 'addOrder',
 	templateUrl: 'views/addOrder.html',
 	providers: [ServiceService, OrderService],
-	directives: [ServiceListComponent]
+	directives: [ServiceListComponent, ClientSelectComponet] 
 })
 
 export class AddOrderComponent implements OnInit {
@@ -21,6 +22,7 @@ export class AddOrderComponent implements OnInit {
 	private dataAtual = new Date();
 	public selectedService;
 	public serviceList;
+	public selectedClient;
 	public newOrder = {
 		description: "",
 		price: 0,
@@ -50,12 +52,24 @@ export class AddOrderComponent implements OnInit {
 		this.selectedService = undefined;
 	};
 
-	back() {
-		window.history.back();
-	};
-
 	hasSelectedService(){
 		return this.selectedService !== undefined;
+	};
+	
+	selectClient(client){
+		this.selectedClient = client;
+	};
+	
+	deselectClient() {
+		this.selectedClient = undefined;
+	};
+
+	hasSelectedClient(){
+		return this.selectedClient !== undefined;
+	};
+
+	back() {
+		window.history.back();
 	};
 
 	alertaErro(error){

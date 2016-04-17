@@ -10,7 +10,6 @@ export class UserService {
 	private _loginUrl = 'http://localhost:3000/users/login';
 	private _newUserUrl = 'http://localhost:3000/users';
 	
-
 	login(loginUser : Object) {
 		let body = JSON.stringify(loginUser);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -40,6 +39,17 @@ export class UserService {
 		};
 		LOGGED_USER = loggedUser;
 		return loggedUser;
+	}
+
+	searchUser(username) {
+		var mockUser = {
+			"id" : "ID UNICO",
+			"username": "Username Default",
+			"person": "Id Person",
+			"provider": "Id Provider"
+		};
+
+		return mockUser;
 	}
 
  	private handleError (error: Response) {
