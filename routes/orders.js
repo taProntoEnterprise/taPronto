@@ -12,7 +12,7 @@ router.get('/', jwt, function(req,res){
 
     if(!userId){userId = req.query.userId;}
 
-	Order.find({client:userId},function(err,doc){
+	Order.find({client:userId}).populate('service').exec(function(err,doc){
 		if(err){
                 res.contentType('application/json');
                 res.status(500);
@@ -30,7 +30,7 @@ router.get('/:orderId',function(req,res){
 	var error = {};
 	var result = {};
 	var orderId = req.params.orderId;
-	Order.findOne({_id:orderId},function(err,doc){
+	Order.findOne({_id:orderId}).populate('service').exec(function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
