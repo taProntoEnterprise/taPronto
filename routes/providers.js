@@ -94,4 +94,24 @@ router.put('/',jwt,function (req,res) {
 
 });
 
+router.get('/:userId',function(req,res) {
+    var error = {};
+    var result = {};
+    var userId = req.params.userId;
+    Provider.findOne({user:userId},function(err,doc){
+        if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result.data = doc;
+                res.status(200);
+                res.contentType('application/json');
+            }
+            res.send(JSON.stringify({"result":result, "error":error}));
+    });
+});
+
 module.exports = router;
