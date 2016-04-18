@@ -4,11 +4,12 @@ import { AlertService } from '../services/alert.service';
 import { Order } from '../models/order';
 import { OrderService } from '../services/order.service';
 import { OrderListComponent } from './order-list.component';
+import { PersonService } from '../services/person.service';
 
 @Component({
     selector: 'order',
     templateUrl: 'views/order.html',
-    providers: [OrderService],
+    providers: [OrderService, PersonService],
 	directives: [OrderListComponent]
 })
 
@@ -21,6 +22,10 @@ export class OrderComponent implements OnInit {
 
 	goToRegisterOrder() {
 		this._router.navigate(['AddOrder']);
+	}
+
+	goToEditOrder(order) {
+		this._router.navigate(['EditOrder', { id : order._id}]);
 	}
 	
 	ngOnInit() {

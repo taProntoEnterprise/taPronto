@@ -42,18 +42,15 @@ export class UserService {
 	}
 
 	searchUser(username) {
-		var mockUser = {
-			"id" : "ID UNICO",
-			"username": "Username Default",
-			"person": "Id Person",
-			"provider": "Id Provider"
-		};
-
-		return mockUser;
+		var url = 'http://localhost:3000/users/?username=' + username;
+		return this.http.get(url)
+		.map(res => <Object>res.json().result.data)
+		.do(res => console.log(res))
+		.catch(this.handleError);
 	}
-
+	
  	private handleError (error: Response) {
-	   return Observable.throw(error.json().error || 'Server error');
+	  return Observable.throw(error.json().error || 'Server error');
 	}
 }
 

@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	getProvider(){
-		this._providerService.getServices().subscribe(
+		this._providerService.getProvider(LOGGED_USER.id).subscribe(
 			provider =>this.afterGetProvider(provider),
 			error => this.alertaErro(error))
 	}

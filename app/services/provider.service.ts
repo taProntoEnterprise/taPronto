@@ -10,8 +10,9 @@ export class ProviderService {
 
 	private _providersUrl = 'http://localhost:3000/providers/' + "?userId="+ LOGGED_USER.id;
 
-	getServices() {
-		return this.http.get(this._providersUrl)
+	getProvider(userId) {
+		let url = 'http://localhost:3000/providers/' + userId +  "/?userId="+ LOGGED_USER.id;
+		return this.http.get(url)
                   .map(res => res.json().result.data)
 				  .catch(this.handleError);
 	}

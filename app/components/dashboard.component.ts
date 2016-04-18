@@ -3,6 +3,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angula
 import { ServiceComponent } from './service.component';
 import { OrderComponent } from './order.component';
 import { AddOrderComponent } from './add-order.component';
+import { EditOrderComponent } from './edit-order.component';
 import { ProfileComponent } from './profile.component';
 import { HelpComponent } from './help.component';
 import { AddServiceComponent } from './add-service.component'
@@ -16,8 +17,6 @@ import { UserService, LOGGED_USER } from '../services/user.service';
   templateUrl: 'views/dashboard.html',
   directives: [ROUTER_DIRECTIVES, NgClass]
 })
-
-// Router config da vida, onde coloca as views e o path de cada uma dela
 
 @RouteConfig([
     {
@@ -40,6 +39,11 @@ import { UserService, LOGGED_USER } from '../services/user.service';
       path: '/addOrder',
       name: 'AddOrder',
       component: AddOrderComponent
+    }, 
+    {
+      path: '/order/:id',
+      name: 'EditOrder',   
+      component: EditOrderComponent
     }, 
     {
       path: '/profile',  

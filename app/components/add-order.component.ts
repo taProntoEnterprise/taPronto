@@ -6,11 +6,12 @@ import { AlertService } from '../services/alert.service';
 import { LOGGED_USER } from '../services/user.service';
 import { ServiceListComponent } from './service-list.component';
 import { ClientSelectComponet } from './client-select.component';
+import { PersonService } from '../services/person.service';
 
 @Component({
 	selector: 'addOrder',
 	templateUrl: 'views/addOrder.html',
-	providers: [ServiceService, OrderService],
+	providers: [ServiceService, OrderService, PersonService],
 	directives: [ServiceListComponent, ClientSelectComponet] 
 })
 

@@ -18,6 +18,14 @@ export class ServiceService {
 		.catch(this.handleError);
 	}
 
+	getService(serviceId) {
+		var url = 'http://localhost:3000/services/' + serviceId + "/?userId=" + LOGGED_USER.id;
+		return this.http.get(url)
+		.map(res => <Object>res.json().result.data)
+		.do(res => console.log(res))
+		.catch(this.handleError);
+	}
+
 	registerService(newService : Object){
 		let body = JSON.stringify(newService);
 		let headers = new Headers({ 'Content-Type': 'application/json' });

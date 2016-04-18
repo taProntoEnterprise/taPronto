@@ -4,20 +4,25 @@ import { Service } from '../models/service';
 import { UserService } from '../services/user.service';
 
 @Component({
-    selector: 'clientSelect', 
+    selector: 'clientSelect',
     templateUrl: 'views/clientSelect.html'
 })
 
 export class ClientSelectComponet {
-  	constructor(private _userService: UserService) {}
+	constructor(private _userService: UserService,
+		private _alertService: AlertService) { }
 
-	public clientName : String;
+	public clientName: String;
 
 	@Output() onSelectedClient = new EventEmitter<Object>();
 
 	searchClient(service) {
-		var mockUser = this._userService.searchUser(this.clientName);
+		this._userService.searchUser(this.clientName).subscribe(
+			client => this.onSelectedClient.emit(client),
+			error => this.alertClientNotFound());
+	}
 
-		this.onSelectedClient.emit(mockUser);
+	alertClientNotFound() {
+		this._alertService.addErrorAlert("Cliente não encontrado.");
 	}
 }
