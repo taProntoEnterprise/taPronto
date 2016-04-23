@@ -12,6 +12,7 @@ var OrderSchema = new mongoose.Schema
 	description: {type:String},
 	service: {type:mongoose.Schema.Types.ObjectId,ref:"Service",required:true},
 	client: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
+	provider: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
 	status: {type:String, required:true},
 	creation_date:{type:Date},
 	price: {type:Number}

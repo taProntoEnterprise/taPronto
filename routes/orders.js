@@ -9,21 +9,38 @@ router.get('/', jwt, function(req,res){
 	var error = {};
 	var result = {};
     var userId = req.user;
-
+    var provider = req.query.provider;
+    
     if(!userId){userId = req.query.userId;}
-
-	Order.find({client:userId}).populate('service').exec(function(err,doc){
-		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
-            }else{
-                result.data = doc;
-                res.contentType('application/json');
-            }
-        res.send(JSON.stringify({"result":result, "error":error}));
-	});
+    if(provider && provider=='true'){
+        Order.find({provider:userId}).populate('service')
+        .exec(function(err,doc){
+            if(err){
+                    res.contentType('application/json');
+                    res.status(500);
+                    error.code = err.code;
+                    error.message = err.message;
+                }else{
+                    result.data = doc;
+                    res.contentType('application/json');
+                }
+                res.send(JSON.stringify({"result":result, "error":error}));
+        });
+    }else{
+        Order.find({client:userId}).populate('service')
+        .exec(function(err,doc){
+            if(err){
+                    res.contentType('application/json');
+                    res.status(500);
+                    error.code = err.code;
+                    error.message = err.message;
+                }else{
+                    result.data = doc;
+                    res.contentType('application/json');
+                }
+                res.send(JSON.stringify({"result":result, "error":error}));
+        });
+    }
 });
 
 router.get('/:orderId',function(req,res){
@@ -68,14 +85,13 @@ router.put('/:orderId',function(req,res){
 });
 
 router.post('/', jwt,function(req, res) {
-	var new_order = new Order(req.body);
+    var new_order = new Order(req.body);
 	var error= {};
 	var result = {};
     var userId = req.user;
 
     if(!userId){ userId = req.query.userId;}
     
-    new_order.client=userId;
 	new_order.save(function(err) {
 		if (err) {
 			error.code = err.code;
