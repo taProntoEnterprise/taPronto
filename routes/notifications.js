@@ -24,6 +24,31 @@ router.get('/',jwt,function(req,res){
         res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
+
+router.get('/:notificationId',jwt,function(req,res){
+	var error = {};
+	var result = {};
+	var notificationId = req.params.notificationId;
+	Notification.findOne({_id:notificationId},function(err,doc){
+		if(err){
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
+
+        }else if (doc == null){
+        	res.status(404);
+            error.code = 404;
+            error.message = "Notification Not Found";
+    	}else{
+            result.data= doc;
+            res.status(200);
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+});
+
 router.post('/',jwt, function(req, res) {
 	var notification = new Notification(req.body);
 	console.log(notification);
