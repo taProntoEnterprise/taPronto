@@ -1,28 +1,30 @@
 var express = require('express');
 var Notification = require('../models/notification.js');
 var router = express.Router();
+var jwt = require('../routes/jwtauth.js');
 
-router.get('/',function(req,res){
+
+router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-
-	Notification.find(function(err,doc){
+	var userId = req.user;
+    if(!userId){userId = req.query.userId;}
+	Notification.find({notified:userId,delivered:false},function(err,doc){
 		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
 
-            }else{
-                result = doc;
-                res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
-            }
+        }else{
+            result.data= doc;
+            res.status(200);
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
-
-
 });
-router.post('/addnotification', function(req, res) {
+router.post('/',jwt, function(req, res) {
 	var notification = new Notification(req.body);
 	var error= {};
 	var result = {};
