@@ -26,10 +26,12 @@ router.get('/',jwt,function(req,res){
 });
 router.post('/',jwt, function(req, res) {
 	var notification = new Notification(req.body);
+	console.log(notification);
 	var error= {};
 	var result = {};
 	notification.save(function(err) {
 		if (err) {
+			console.log(err);
 			error.code = err.code;
 			error.message = err.message;
       		//11000: duplicated key
@@ -40,6 +42,31 @@ router.post('/',jwt, function(req, res) {
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
 	});
+});
+
+router.put('/:notificationId',jwt,function (req,res){
+	var result = {};
+	var error = {};
+	var notificationId = req.params.notificationId;
+	var newNotification = new Notification(req.body).toObject();
+	delete newNotification._id;
+	delete newNotification.code;
+
+	Notification.update({_id:notificationId},newNotification,{},function (err,doc) {
+		if(err){
+			res.contentType('application/json');
+            res.status(500);
+            error.code=err.code;
+            error.message=err.message;
+		}else{
+			res.contentType('application/json');
+            res.status(200);
+            newNotification._id=notificationId;
+            result.data=newNotification;
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+
 });
 
 module.exports = router;
