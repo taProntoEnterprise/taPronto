@@ -1,6 +1,6 @@
 import { Injectable } from 'angular2/core';
 import { Order } from '../models/order';
-import { LOGGED_USER } from './user.service';
+import { LOGGED_USER, userToken } from './user.service';
 import { Http, Response, RequestOptions, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 import { PersonService } from './person.service';
@@ -11,18 +11,22 @@ export class OrderService {
 	constructor(private http: Http,
 		private _personService: PersonService) { }
 
-	private _orderUrl = 'http://localhost:3000/orders/' + "?userId=" + LOGGED_USER.id;
+	private _orderUrl = 'http://localhost:3000/orders/';
 
 	getOrders() {
-		return this.http.get(this._orderUrl)
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
+		let options = new RequestOptions({ headers: headers });
+		return this.http.get(this._orderUrl + "?provider=true", options)
 		.map(res => <Array<Object>>res.json().result.data)
 		.do(res => console.log(res))
 		.catch(this.handleError);
 	}
 
 	getOrder(idOrder) {
-		var url = 'http://localhost:3000/orders/' + idOrder + "/?userId=" + LOGGED_USER.id;
-		return this.http.get(url)
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
+		let options = new RequestOptions({ headers: headers });
+		var url = 'http://localhost:3000/orders/' + idOrder;
+		return this.http.get(url, options)
 		.flatMap(order => {
 			let idUserClient = <Object>order.json().result.data.client;
 			return this._personService.getPerson(idUserClient).map(client => {
@@ -36,8 +40,10 @@ export class OrderService {
 	}
 
 	registerOrder(newOrder : Object){
+		newOrder.provider = LOGGED_USER.id;
 		let body = JSON.stringify(newOrder);
-		let headers = new Headers({ 'Content-Type': 'application/json' });
+
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._orderUrl, body, options)
 			.map(res => <Object>res.json().result.data)
@@ -50,14 +56,16 @@ export class OrderService {
 	}
 
     readyOrder(order) {
-	    var url = 'http://localhost:3000/orders/' + order._id + "/?userId=" + LOGGED_USER.id;
+	    var url = 'http://localhost:3000/orders/' + order._id;
 		order.status = "taPronto";
 
 		let body = JSON.stringify(order);
-	  	let headers = new Headers({ 'Content-Type': 'application/json' });
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.put(url, body, options)
 			.map(res => <Object>res.json().result.data)
 			.catch(this.handleError);
     }
 }
+
+

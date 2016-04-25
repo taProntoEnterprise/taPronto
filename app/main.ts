@@ -6,4 +6,4 @@ import { AlertService } from './services/alert.service';
 import {UserService} from './services/user.service';
 import 'rxjs/Rx';
 
-bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, AlertService, UserService]);
+var appPromise = bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, AlertService, UserService]);

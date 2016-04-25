@@ -1,26 +1,29 @@
 import { Injectable } from 'angular2/core';
 import { Service } from '../models/service';
-import { LOGGED_USER } from './user.service';
+import { LOGGED_USER, userToken } from './user.service';
 import { Http, Response, RequestOptions, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
-
 
 @Injectable()
 export class ServiceService {
 	constructor(private http: Http) { }
 
-	private _serviceUrl = 'http://localhost:3000/services/' + "?userId=" + LOGGED_USER.id;
+	private _serviceUrl = 'http://localhost:3000/services/';
 
 	getServices() {
-		return this.http.get(this._serviceUrl)
-		.map(res => <Array<Object>>res.json().result.data)
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
+		let options = new RequestOptions({ headers: headers });
+		return this.http.get(this._serviceUrl, options)
+			.map(res => <Array<Object>>res.json().result.data)
 		.do(res => console.log(res))
 		.catch(this.handleError);
 	}
 
 	getService(serviceId) {
-		var url = 'http://localhost:3000/services/' + serviceId + "/?userId=" + LOGGED_USER.id;
-		return this.http.get(url)
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
+		let options = new RequestOptions({ headers: headers });
+		var url = 'http://localhost:3000/services/' + serviceId;
+		return this.http.get(url, options)
 		.map(res => <Object>res.json().result.data)
 		.do(res => console.log(res))
 		.catch(this.handleError);
@@ -28,7 +31,7 @@ export class ServiceService {
 
 	registerService(newService : Object){
 		let body = JSON.stringify(newService);
-		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._serviceUrl, body, options)
 			.map(res => <Object>res.json().result.data)

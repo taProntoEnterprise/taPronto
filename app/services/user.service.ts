@@ -3,19 +3,23 @@ import {User} from '../models/user';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 
-@Injectable() 
+@Injectable()
 export class UserService {
 	constructor(private http: Http) { }
 
 	private _loginUrl = 'http://localhost:3000/users/login';
 	private _newUserUrl = 'http://localhost:3000/users';
-	
-	login(loginUser : Object) {
+
+	login(loginUser: Object) {
 		let body = JSON.stringify(loginUser);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(this._loginUrl, body, options)
-			.map(res => this.mapUser(<Object>res.json().result.data))
+			.map(res => {
+				this.mapUser(<Object>res.json().result.data);
+				console.log(<String>res.json().result.token);
+				userToken = <String>res.json().result.token;
+			})
 			.do(data => console.log(data))
 			.catch(this.handleError)
 	}
@@ -55,3 +59,5 @@ export class UserService {
 }
 
 export var LOGGED_USER : User;
+
+export var userToken : String;
