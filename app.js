@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(__dirname + '/node_modules/'));
+app.use('/angular2-localstorage', express.static(__dirname + '/node_modules/angular2-localstorage/'));
 app.use('/bootstrap',express.static(__dirname + '/node_modules/bootstrap/dist/'));
 app.use('/app', express.static(__dirname + '/app/'));
 app.use('/views', express.static(__dirname + '/views/'));

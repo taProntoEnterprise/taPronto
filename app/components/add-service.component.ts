@@ -1,7 +1,7 @@
 import { Component } from 'angular2/core';
-import { ServiceService } from './service.service';
+import { ServiceService } from '../services/service.service';
 import { RequestOptions } from 'angular2/http';
-import { AlertService } from './alert.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
 	selector: 'addService',

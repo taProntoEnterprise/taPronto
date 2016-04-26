@@ -5,12 +5,16 @@ var Provider = require('../models/provider.js');
 var User = require('../models/user.js');
 var mongoose = require('mongoose');
 var router = express.Router();
+var jwt = require('../routes/jwtauth.js');
 
-router.get('/',function(req,res){
+
+router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-	var userId = req.query.userId;
-	console.log(userId);
+	var userId = req.user;
+
+    if(!userId){userId = req.query.userId;}
+
 	Provider.findOne({user:userId}, function(err,doc){
 		if(err){
                 res.contentType('application/json');
@@ -26,9 +30,13 @@ router.get('/',function(req,res){
 	});
 });
 
-router.post('/',function(req,res){
+router.post('/',jwt,function(req,res){
 	var provider = new Provider(req.body);
-	provider.user = req.query.userId;
+	var userId = req.user;
+
+    if(!userId){userId = req.query.userId;}
+	provider.user = userId;
+
 	var error = {};
 	var result = {};
 	provider.save(function(err) {
@@ -42,7 +50,7 @@ router.post('/',function(req,res){
       	}else{
 			result.data = provider;
 		    res.status(201);
-			User.findById(req.query.userId, function(err2,doc){
+			User.findById(userId, function(err2,doc){
 				if(err2){
 						res.contentType('application/json');
 						res.status(404);
@@ -59,10 +67,13 @@ router.post('/',function(req,res){
 });
 
 
-router.put('/',function (req,res) {
+router.put('/',jwt,function (req,res) {
 	var result = {};
 	var error = {};
-	var userId= req.query.userId;
+	var userId = req.user;
+
+    if(!userId){userId = req.query.userId;}
+
 	var newProvider = new Provider(req.body).toObject();
 	delete newProvider._id;
 	Provider.update({user:userId},newProvider,{},function (err,doc) {
@@ -81,6 +92,26 @@ router.put('/',function (req,res) {
 
 	});
 
+});
+
+router.get('/:userId',function(req,res) {
+    var error = {};
+    var result = {};
+    var userId = req.params.userId;
+    Provider.findOne({user:userId},function(err,doc){
+        if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result.data = doc;
+                res.status(200);
+                res.contentType('application/json');
+            }
+            res.send(JSON.stringify({"result":result, "error":error}));
+    });
 });
 
 module.exports = router;

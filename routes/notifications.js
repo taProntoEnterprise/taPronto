@@ -1,33 +1,62 @@
 var express = require('express');
 var Notification = require('../models/notification.js');
 var router = express.Router();
+var jwt = require('../routes/jwtauth.js');
 
-router.get('/',function(req,res){
+
+router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-
-	Notification.find(function(err,doc){
+	var userId = req.user;
+    if(!userId){userId = req.query.userId;}
+	Notification.find({notified:userId,delivered:false},function(err,doc){
 		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
 
-            }else{
-                result = doc;
-                res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
-            }
+        }else{
+            result.data= doc;
+            res.status(200);
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
 	});
-
-
 });
-router.post('/addnotification', function(req, res) {
+
+router.get('/:notificationId',jwt,function(req,res){
+	var error = {};
+	var result = {};
+	var notificationId = req.params.notificationId;
+	Notification.findOne({_id:notificationId},function(err,doc){
+		if(err){
+            res.contentType('application/json');
+            res.status(500);
+            error.code = err.code;
+            error.message = err.message;
+
+        }else if (doc == null){
+        	res.status(404);
+            error.code = 404;
+            error.message = "Notification Not Found";
+    	}else{
+            result.data= doc;
+            res.status(200);
+            res.contentType('application/json');
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+});
+
+router.post('/',jwt, function(req, res) {
 	var notification = new Notification(req.body);
+	console.log(notification);
 	var error= {};
 	var result = {};
 	notification.save(function(err) {
 		if (err) {
+			console.log(err);
 			error.code = err.code;
 			error.message = err.message;
       		//11000: duplicated key
@@ -38,6 +67,31 @@ router.post('/addnotification', function(req, res) {
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
 	});
+});
+
+router.put('/:notificationId',jwt,function (req,res){
+	var result = {};
+	var error = {};
+	var notificationId = req.params.notificationId;
+	var newNotification = new Notification(req.body).toObject();
+	delete newNotification._id;
+	delete newNotification.code;
+
+	Notification.update({_id:notificationId},newNotification,{},function (err,doc) {
+		if(err){
+			res.contentType('application/json');
+            res.status(500);
+            error.code=err.code;
+            error.message=err.message;
+		}else{
+			res.contentType('application/json');
+            res.status(200);
+            newNotification._id=notificationId;
+            result.data=newNotification;
+        }
+        res.send(JSON.stringify({"result":result, "error":error}));
+	});
+
 });
 
 module.exports = router;

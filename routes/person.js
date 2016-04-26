@@ -4,10 +4,13 @@ var Person = require('../models/person.js');
 var User = require('../models/user.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 var router = express.Router();
+var jwt = require('../routes/jwtauth.js');
 
 
-router.get('/',function (req,res) {
-	var userId=new ObjectId(req.query.userId);
+router.get('/',jwt,function (req,res) {
+    var userId = req.user;
+    if(!userId){userId = req.query.userId;}
+
 	var error = {};
 	var result = {};
 
@@ -27,8 +30,10 @@ router.get('/',function (req,res) {
 });
 
 
-router.post('/',function (req,res) {
-	var userId = req.query.userId;
+router.post('/',jwt,function (req,res) {
+	var userId = req.user;
+    if(!userId){userId = req.query.userId;}
+
 	var person = new Person(req.body);
 	var error = {};
 	var result = {};
@@ -62,12 +67,14 @@ router.post('/',function (req,res) {
 });
 
 
-//TODO PUT
 
-router.put('/',function (req,res) {
+router.put('/',jwt,function (req,res) {
      var error = {};
      var result = {};
-     var userId = req.query.userId;
+
+     var userId = req.user;
+     if(!userId){userId = req.query.userId;}
+
      var updatedPerson = new Person(req.body);
 
      User.findById(userId,function (err,doc) {
@@ -99,6 +106,27 @@ router.put('/',function (req,res) {
             });
           }
      });
+});
+
+
+router.get('/:userId',function(req,res) {
+    var error = {};
+    var result = {};
+    var userId = req.params.userId;
+    Person.findOne({user:userId},function(err,doc){
+        if(err){
+                res.contentType('application/json');
+                res.status(500);
+                error.code = err.code;
+                error.message = err.message;
+
+            }else{
+                result.data = doc;
+                res.status(200);
+                res.contentType('application/json');
+            }
+            res.send(JSON.stringify({"result":result, "error":error}));
+    });
 });
 
 module.exports = router;

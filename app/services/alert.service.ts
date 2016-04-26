@@ -14,6 +14,7 @@ export class AlertService {
 	}
 
 	private addAlert(type : string, msg : string){
+		this.alerts.pop();
 		this.alerts.push({
 			type: type,
 			msg: msg

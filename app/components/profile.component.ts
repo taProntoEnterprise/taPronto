@@ -1,21 +1,16 @@
 import { Component, OnInit } from 'angular2/core';
-import { LOGGED_USER } from './user.service';
+import { LOGGED_USER } from '../services/user.service';
 import { Router } from 'angular2/router';
-import { ProviderService } from './provider.service';
-import { AlertService } from './alert.service';
-import { Provider } from './models/provider';
+import { ProviderService } from '../services/provider.service';
+import { AlertService } from '../services/alert.service';
+import { Provider } from '../models/provider';
 
-
-// Funciona como declaracao do controller/diretiva, tudo é diretiva no angular 2.0,
-// por isso é chamado de componente agora, um componente pode ter outros componentes
-// e acessarem 'certas' coisas deles. Bem vago.
 @Component({
-    selector: 'profile', // nome utilizado no HTML para importar a diretiva
+    selector: 'profile', 
     templateUrl: 'views/profile.html',
     providers: [ProviderService]
 })
 
-// Aqui eh a função em si do controller/diretiva
 export class ProfileComponent implements OnInit {
 	constructor(private _providerService: ProviderService,
 		private _alertService: AlertService,
@@ -57,7 +52,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	addNewPhone() {
-		this.phones.push({});
+	    this.phones.push({});
 	}
 
 	addNewAddress() {
@@ -71,8 +66,15 @@ export class ProfileComponent implements OnInit {
 	afterRegister(provider){
 		this.provider = provider;
 		LOGGED_USER.provider = provider._id;
- 		this._router.navigate(["Service"]);
 		this._alertService.addSuccessAlert("Dados do fornecedor cadastrados com sucesso.");
+	}
+
+	saveProvider() {
+		if(this.hasProvider()){
+			this.updateProvider();
+		} else {
+			this.registerProvider();
+		}
 	}
 
 	registerProvider() {
@@ -81,8 +83,25 @@ export class ProfileComponent implements OnInit {
 		this.provider.addresses = this.extractValuesFromList(this.addresses);
 		if(this.provider.phones.length <= 0){
 			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um telefone de contato.");
+		} else if(this.provider.emails.length <= 0){
+			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um email.");
 		} else {
 			this._providerService.registerProvider(this.provider).subscribe(
+				provider => this.afterRegister(provider),
+				error => this.alertaErro(error))
+		}
+	}
+
+	updateProvider() {
+		this.provider.phones = this.extractValuesFromList(this.phones);
+		this.provider.emails = this.extractValuesFromList(this.emails);
+		this.provider.addresses = this.extractValuesFromList(this.addresses);
+		if (this.provider.phones.length <= 0) {
+			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um telefone de contato.");
+		} else if(this.provider.emails.length <= 0){
+			this._alertService.addErrorAlert("O fornecedor precisa ter ao menos um email.");
+		} else {
+			this._providerService.updateProvider(this.provider).subscribe(
 				provider => this.afterRegister(provider),
 				error => this.alertaErro(error))
 		}
@@ -98,7 +117,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	getProvider(){
-		this._providerService.getServices().subscribe(
+		this._providerService.getProvider(LOGGED_USER.id).subscribe(
 			provider =>this.afterGetProvider(provider),
 			error => this.alertaErro(error))
 	}
@@ -110,6 +129,8 @@ export class ProfileComponent implements OnInit {
 	ngOnInit() {
 		if(LOGGED_USER.id !== undefined){
 			this.getProvider();
+			this.addNewPhone();
+			this.addNewEmail();
 		}
 	}
 

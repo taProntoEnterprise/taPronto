@@ -4,3 +4,4 @@ app/*.js.map
 typings/*
 app/*/*.js
 typings/*/*.js
+app/*/*.js.map

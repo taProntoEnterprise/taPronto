@@ -1,5 +1,5 @@
-<orderList [orderList]="orderList"> </orderList>
+<orderList [orderList]="orderList" (onSelectedOrder)="goToEditOrder($event)"> </orderList>
 
 <div class="row">
-	<button class="btn btn-primary" (click)="goToRegisterOrder()"> Cadastrar Novo Pedido</button>
+	<button class="btn btn-primary" (click)="goToRegisterOrder()"> Cadastrar Novo Pedido </button>
 </div>

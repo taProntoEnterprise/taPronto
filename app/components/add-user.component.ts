@@ -1,7 +1,7 @@
 import { Component } from 'angular2/core';
-import { UserService } from './user.service';
+import { UserService } from '../services/user.service';
 import { RequestOptions } from 'angular2/http';
-import { AlertService } from './alert.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
 	selector: 'addUser',
