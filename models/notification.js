@@ -13,7 +13,8 @@ var NotificationSchema = new mongoose.Schema
 	order: {type:mongoose.Schema.Types.ObjectId, ref:"Order",required: true},
 	notifier: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
 	notified: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
-	notification_date: {type:Date, required:true, default:Date.now}
+	notification_date: {type:Date, required:true, default:Date.now},
+	blocked:{type: Boolean,default:false}
 }
 
 
