@@ -18,6 +18,10 @@
         </div>
         <section>
           <button type="submit" name="go" class="btn btn-block">Entrar</button>
+          <div [hidden]="!isDelayedRunning" class="spinner">  
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>  
           <p><a [routerLink]="['AddUser']">Criar uma nova conta</a></p> 
         </section>
       </form>

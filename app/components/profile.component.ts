@@ -5,10 +5,11 @@ import { ProviderService } from '../services/provider.service';
 import { AlertService } from '../services/alert.service';
 import { Provider } from '../models/provider';
 
+
 @Component({
     selector: 'profile', 
     templateUrl: 'views/profile.html',
-    providers: [ProviderService]
+    providers: [ProviderService],
 })
 
 export class ProfileComponent implements OnInit {
@@ -17,6 +18,7 @@ export class ProfileComponent implements OnInit {
 		private _router : Router) { }
 	public user = LOGGED_USER;
 
+	documentTypes = ['CPF', 'CNPJ','RG'];
 	public phones = [];
 	public addresses = [];
 	public emails = [];
