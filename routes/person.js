@@ -130,7 +130,7 @@ router.get('/:userId',function(req,res) {
 });
 
 
-router.post('/block/:providerId',jwt,function (req,res) {
+router.put('/block/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
@@ -155,7 +155,7 @@ router.post('/block/:providerId',jwt,function (req,res) {
      });
 });
 
-router.post('/unblock/:providerId',jwt,function (req,res) {
+router.put('/unblock/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
