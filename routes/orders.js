@@ -23,7 +23,7 @@ router.get('/',function(req,res){
 	});
 });
 
-router.get('/:orderId',function(req,res){
+router.get('/:orderId/',function(req,res){
 	var error = {};
 	var result = {};
 	var orderId = req.params.orderId;

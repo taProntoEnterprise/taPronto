@@ -316,6 +316,7 @@ var orders = [
         "client": client1,
         "status": "em andamento",
         "description": "Gráfica Copiar - Confecção das comandas",
+        "creation_date": "12/02/2016",
         "price": 200
     },
     {
