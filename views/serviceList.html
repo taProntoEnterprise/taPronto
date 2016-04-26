@@ -13,5 +13,9 @@
       <td>{{service.description}}</td>
     </tr>
   </tbody>
+  <div *ngIf="serviceList == 0" align="center">
+  <h4>Nenhum serviço foi encontrado.</h4>
+  </div>
+  
 </table>
 </div>

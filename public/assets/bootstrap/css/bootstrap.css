@@ -4685,6 +4685,9 @@ a.thumbnail.active {
   color: #333;
 }
 .alert {
+  position: fixed;
+  top: 0;
+  width: 100%; 
   padding: 15px;
   margin-bottom: 1px;
   border: 1px solid transparent;

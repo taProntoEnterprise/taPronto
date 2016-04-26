@@ -13,5 +13,8 @@
       <td>{{order.description}}</td>
     </tr>
   </tbody>
+   <div *ngIf="orderList == 0" align="center">
+  	<h4>Nenhum pedido foi encontrado.</h4>
+  </div>
 </table>
 </div>
