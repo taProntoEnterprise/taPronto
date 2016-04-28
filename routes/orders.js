@@ -9,11 +9,15 @@ var jwt = require('../routes/jwtauth.js');
 router.get('/', jwt, function(req,res){
 	var error = {};
 	var result = {};
-    var userId = req.user._id;
     var provider = req.query.provider;
     var isBlocked = req.query.blocked=='true';
     
-    if(!userId){userId = req.query.userId;}
+     var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
     if(provider && provider=='true'){
         Order.find({provider:userId,blocked:isBlocked}).populate('service')
         .exec(function(err,doc){
@@ -90,10 +94,14 @@ router.post('/', jwt,function(req, res) {
     var new_order = new Order(req.body);
 	var error= {};
 	var result = {};
-    var userId = req.user._id;
     var client = new_order.client;
     var blockedProviders = [];
-    if(!userId){ userId = req.query.userId;}
+     var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
 
     Person.findOne({user:client},function (err,doc) {
          if(err){
