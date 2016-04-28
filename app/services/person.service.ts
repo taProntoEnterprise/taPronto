@@ -11,7 +11,7 @@ export class PersonService {
 	getPerson(userId) {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
-		let url = 'http://localhost:3000/person/' + userId;
+		let url = 'https://tapronto1.herokuapp.com/person/' + userId;
 		return this.http.get(url, options)
                   .map(res => res.json().result.data)
 				  .catch(this.handleError);

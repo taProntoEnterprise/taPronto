@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 export class ServiceService {
 	constructor(private http: Http) { }
 
-	private _serviceUrl = 'http://localhost:3000/services/';
+	private _serviceUrl = 'https://tapronto1.herokuapp.com/services/';
 
 	getServices() {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
@@ -22,7 +22,7 @@ export class ServiceService {
 	getService(serviceId) {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
-		var url = 'http://localhost:3000/services/' + serviceId;
+		var url = 'https://tapronto1.herokuapp.com/services/' + serviceId;
 		return this.http.get(url, options)
 		.map(res => <Object>res.json().result.data)
 		.do(res => console.log(res))

@@ -8,12 +8,12 @@ import { LOGGED_USER, userToken } from './user.service';
 export class ProviderService {
 	constructor(private http: Http) { }
 
-	private _providersUrl = 'http://localhost:3000/providers/';
+	private _providersUrl = 'https://tapronto1.herokuapp.com/providers/';
 
 	getProvider(userId) {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
-		let url = 'http://localhost:3000/providers/' + userId;
+		let url = 'https://tapronto1.herokuapp.com/providers/' + userId;
 		return this.http.get(url, options)
                   .map(res => res.json().result.data)
 				  .catch(this.handleError);
@@ -29,7 +29,7 @@ export class ProviderService {
 	}
 
 	updateProvider(provider){
-		var url = 'http://localhost:3000/providers/' +
+		var url = 'https://tapronto1.herokuapp.com/providers/' +
 			provider.id;
 		let body = JSON.stringify(provider);
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
