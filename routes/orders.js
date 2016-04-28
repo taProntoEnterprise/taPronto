@@ -1,5 +1,6 @@
 var express = require('express');
 var Order = require('../models/order.js');
+var Person = require('../models/person.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var jwt = require('../routes/jwtauth.js');
@@ -96,6 +97,10 @@ router.post('/', jwt,function(req, res) {
 
     Person.findOne({user:client},function (err,doc) {
          if(err){
+            res.status(500);
+            error.code = 500;
+            res.send(JSON.stringify({"result": result, "error": error}));
+         }else if(!doc){
             res.status(404);
             error.code = 404;
             error.message = "Client Not Found";
