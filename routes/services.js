@@ -8,7 +8,7 @@ router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
 
-	var userId = req.user;
+	var userId = req.user._id;
 	//remove after token based authentication is ready
     if(!userId){ userId = req.query.userId;}
 
@@ -53,7 +53,7 @@ router.post('/', jwt,function(req, res) {
 	var result = {};
 	
 
-	var userId = req.user;
+	var userId = req.user._id;
 	//remove after token based authentication is ready
     if(!userId){ userId = req.query.userId;}
 

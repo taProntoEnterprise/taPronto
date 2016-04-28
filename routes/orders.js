@@ -9,7 +9,7 @@ var jwt = require('../routes/jwtauth.js');
 router.get('/', jwt, function(req,res){
 	var error = {};
 	var result = {};
-    var userId = req.user;
+    var userId = req.user._id;
     var provider = req.query.provider;
     var isBlocked = req.query.blocked=='true';
     
@@ -90,7 +90,7 @@ router.post('/', jwt,function(req, res) {
     var new_order = new Order(req.body);
 	var error= {};
 	var result = {};
-    var userId = req.user;
+    var userId = req.user._id;
     var client = new_order.client;
     var blockedProviders = [];
     if(!userId){ userId = req.query.userId;}
@@ -107,7 +107,7 @@ router.post('/', jwt,function(req, res) {
             res.send(JSON.stringify({"result": result, "error": error}));
          }else{
             blockedProviders = doc.blockedProviders;
-            var blocked = !(blockedProviders.indexOf(client) == -1);
+            var blocked = !(blockedProviders.indexOf(userId) == -1);
             new_order.blocked=blocked;
         	new_order.save(function(err2) {
         		if (err2) {

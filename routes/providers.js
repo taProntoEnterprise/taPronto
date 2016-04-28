@@ -11,7 +11,7 @@ var jwt = require('../routes/jwtauth.js');
 router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-	var userId = req.user;
+	var userId = req.user._id;
 
     if(!userId){userId = req.query.userId;}
 
@@ -32,7 +32,7 @@ router.get('/',jwt,function(req,res){
 
 router.post('/',jwt,function(req,res){
 	var provider = new Provider(req.body);
-	var userId = req.user;
+	var userId = req.user._id;
 
     if(!userId){userId = req.query.userId;}
 	provider.user = userId;
@@ -70,7 +70,7 @@ router.post('/',jwt,function(req,res){
 router.put('/',jwt,function (req,res) {
 	var result = {};
 	var error = {};
-	var userId = req.user;
+	var userId = req.user._id;
 
     if(!userId){userId = req.query.userId;}
 

@@ -8,7 +8,7 @@ var jwt = require('../routes/jwtauth.js');
 
 
 router.get('/',jwt,function (req,res) {
-    var userId = req.user;
+    var userId = req.user._id;
     if(!userId){userId = req.query.userId;}
 
 	var error = {};
@@ -31,7 +31,7 @@ router.get('/',jwt,function (req,res) {
 
 
 router.post('/',jwt,function (req,res) {
-	var userId = req.user;
+	var userId = req.user._id;
     if(!userId){userId = req.query.userId;}
 
 	var person = new Person(req.body);
@@ -72,7 +72,7 @@ router.put('/',jwt,function (req,res) {
      var error = {};
      var result = {};
 
-     var userId = req.user;
+     var userId = req.user._id;
      if(!userId){userId = req.query.userId;}
 
      var updatedPerson = new Person(req.body);
@@ -134,11 +134,9 @@ router.put('/block/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
-     var userId = req.user;
+     var userId = req.user._id;
      if(!userId){userId = req.query.userId;}
 
-     console.log(userId);
-     console.log(providerId);
      Person.update({user:userId},{$addToSet:{blockedProviders:providerId}},function (err,doc) {
         if(err){
             res.contentType('application/json');
@@ -159,7 +157,7 @@ router.put('/unblock/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
-     var userId = req.user;
+     var userId = req.user._id;
      if(!userId){userId = req.query.userId;}
 
      Person.update({user:userId},{$pull:{blockedProviders:providerId}},function (err,doc) {
