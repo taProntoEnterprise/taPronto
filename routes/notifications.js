@@ -8,8 +8,12 @@ var Person = require('../models/person.js');
 router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-	var userId = req.user;
-    if(!userId){userId = req.query.userId;}
+	 var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
     var isBlocked = req.query.blocked =='true';
 	Notification.find({notified:userId,delivered:false,blocked:isBlocked},function(err,doc){
 		if(err){

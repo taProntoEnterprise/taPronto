@@ -8,9 +8,13 @@ router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
 
-	var userId = req.user;
 	//remove after token based authentication is ready
-    if(!userId){ userId = req.query.userId;}
+	 var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
 
 	Service.find({provider:userId},function(err,doc){
 		if(err){
@@ -53,9 +57,13 @@ router.post('/', jwt,function(req, res) {
 	var result = {};
 	
 
-	var userId = req.user;
 	//remove after token based authentication is ready
-    if(!userId){ userId = req.query.userId;}
+	 var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
 
 	service.provider = userId;
 
