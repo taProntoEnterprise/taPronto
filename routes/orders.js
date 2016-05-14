@@ -1,6 +1,7 @@
 var express = require('express');
 var Order = require('../models/order.js');
 var Person = require('../models/person.js');
+var Notification = require('../models/notification.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var jwt = require('../routes/jwtauth.js');
@@ -85,8 +86,26 @@ router.put('/:orderId',function(req,res){
             res.status(200);
             newOrder._id=orderId;
             result.data=newOrder;
+
+            var newNotification = {};
+            newNotification.order = newOrder._id;
+            newNotification.notifier = newOrder.provider;
+            newNotification.notified = newOrder.client;
+            var notification = new Notification(newNotification);
+            notification.save(function(err2) {
+                if (err2) {
+                    error.code = err2.code;
+                    error.message = err2.message;
+                    //11000: duplicated key
+                    res.send(JSON.stringify({"result":result, "error":error}));
+                }else{
+                    res.status(201);
+                    result.notification = newNotification;
+
+                }
+                    res.send(JSON.stringify({"result":result, "error":error}));
+            });
         }
-        res.send(JSON.stringify({"result":result, "error":error}));
     });
 });
 
