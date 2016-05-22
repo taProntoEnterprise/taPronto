@@ -36,7 +36,7 @@ router.get('/', jwt, function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
         });
     }else{
-        Order.find({client:userId,blocked:isBlocked}).populate('service','client','provider')
+        Order.find({client:userId,blocked:isBlocked}).populate('service client provider')
         .exec(function(err,doc){
             if(err){
                     res.contentType('application/json');
