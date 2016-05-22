@@ -8,14 +8,18 @@ var Person = require('../models/person.js');
 router.get('/',jwt,function(req,res){
 	var error = {};
 	var result = {};
-	 var userId = null;
-  if(req.user){
-    userId = req.user._id;
-  }else{
-    userId = req.query.userId;
-  }
+	var userId = null;
+	if(req.user){
+	    userId = req.user._id;
+	}else{
+	    userId = req.query.userId;
+	}
+	
     var isBlocked = req.query.blocked =='true';
-	Notification.find({notified:userId,delivered:false,blocked:isBlocked},function(err,doc){
+    var isDelivered = req.query.delivered  || false;
+    console.log(userId + isDelivered + isBlocked);
+	Notification.find({notified:userId,delivered:isDelivered,blocked:isBlocked}).populate('order notifier')
+        .exec(function(err,doc){
 		if(err){
             res.contentType('application/json');
             res.status(500);
