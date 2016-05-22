@@ -1,6 +1,8 @@
 var express = require('express');
 var Order = require('../models/order.js');
 var Person = require('../models/person.js');
+var Person = require('../models/provider.js');
+var Person = require('../models/person.js');
 var Notification = require('../models/notification.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
@@ -20,7 +22,7 @@ router.get('/', jwt, function(req,res){
     userId = req.query.userId;
   }
     if(provider && provider=='true'){
-        Order.find({provider:userId,blocked:isBlocked}).populate('service')
+        Order.find({provider:userId,blocked:isBlocked}).populate('service client provider')
         .exec(function(err,doc){
             if(err){
                     res.contentType('application/json');
@@ -34,7 +36,7 @@ router.get('/', jwt, function(req,res){
                 res.send(JSON.stringify({"result":result, "error":error}));
         });
     }else{
-        Order.find({client:userId,blocked:isBlocked}).populate('service')
+        Order.find({client:userId,blocked:isBlocked}).populate('service','client','provider')
         .exec(function(err,doc){
             if(err){
                     res.contentType('application/json');
