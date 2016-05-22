@@ -8,8 +8,12 @@ var jwt = require('../routes/jwtauth.js');
 
 
 router.get('/',jwt,function (req,res) {
-    var userId = req.user._id;
-    if(!userId){userId = req.query.userId;}
+    var userId = null;
+    if(req.user){
+      userId = req.user._id;
+    }else{
+      userId = req.query.userId;
+    }
 
 	var error = {};
 	var result = {};
@@ -31,8 +35,12 @@ router.get('/',jwt,function (req,res) {
 
 
 router.post('/',jwt,function (req,res) {
-	var userId = req.user._id;
-    if(!userId){userId = req.query.userId;}
+    var userId = null;
+    if(req.user){
+      userId = req.user._id;
+    }else{
+      userId = req.query.userId;
+    }
 
 	var person = new Person(req.body);
 	var error = {};
@@ -69,11 +77,15 @@ router.post('/',jwt,function (req,res) {
 
 
 router.put('/',jwt,function (req,res) {
-     var error = {};
-     var result = {};
+  var error = {};
+  var result = {};
 
-     var userId = req.user._id;
-     if(!userId){userId = req.query.userId;}
+  var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
 
      var updatedPerson = new Person(req.body);
 
@@ -134,8 +146,12 @@ router.put('/block/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
-     var userId = req.user._id;
-     if(!userId){userId = req.query.userId;}
+      var userId = null;
+    if(req.user){
+      userId = req.user._id;
+    }else{
+      userId = req.query.userId;
+    }
 
      Person.update({user:userId},{$addToSet:{blockedProviders:providerId}},function (err,doc) {
         if(err){
@@ -157,8 +173,12 @@ router.put('/unblock/:providerId',jwt,function (req,res) {
      var error  = {};
      var result = {};
      var providerId = req.params.providerId;
-     var userId = req.user._id;
-     if(!userId){userId = req.query.userId;}
+      var userId = null;
+  if(req.user){
+    userId = req.user._id;
+  }else{
+    userId = req.query.userId;
+  }
 
      Person.update({user:userId},{$pull:{blockedProviders:providerId}},function (err,doc) {
         if(err){
