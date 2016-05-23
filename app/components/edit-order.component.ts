@@ -33,7 +33,9 @@ export class EditOrderComponent implements OnInit {
 	}
 
 	updateOrder(){
-		this._orderService.readyOrder(this.order)
+		let orderPut = this.order;
+		orderPut.client = this.order.client.user;
+		this._orderService.readyOrder(orderPut)
 			.subscribe(success => this._alertService.addSuccessAlert("Pedido atualizado com sucesso!"),
 				error => this.alertaErro(error.message))
 	}
