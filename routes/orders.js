@@ -16,11 +16,11 @@ router.get('/', jwt, function(req,res){
     var isBlocked = req.query.blocked=='true';
     
      var userId = null;
-  if(req.user){
-    userId = req.user._id;
-  }else{
-    userId = req.query.userId;
-  }
+      if(req.user){
+        userId = req.user._id;
+      }else{
+        userId = req.query.userId;
+      }
     if(provider && provider=='true'){
         Order.find({provider:userId,blocked:isBlocked}).populate('service client provider')
         .exec(function(err,doc){
@@ -52,7 +52,7 @@ router.get('/', jwt, function(req,res){
     }
 });
 
-router.get('/:orderId',function(req,res){
+router.get('/:orderId/',function(req,res){
 	var error = {};
 	var result = {};
 	var orderId = req.params.orderId;

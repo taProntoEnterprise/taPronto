@@ -14,7 +14,7 @@ var OrderSchema = new mongoose.Schema
 	client: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
 	provider: {type:mongoose.Schema.Types.ObjectId, ref:"User",required: true},
 	status: {type:String, required:true},
-	creation_date:{type:Date},
+	creation_date:{type:Date, default:Date.now},
 	price: {type:Number},
 	blocked:{type:Boolean,default:false}
 }

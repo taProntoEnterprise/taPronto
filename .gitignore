@@ -2,5 +2,11 @@ node_modules
 app/*.js
 app/*.js.map
 typings/*
+<<<<<<< HEAD
+app/*/*.js
+typings/*/*.js
+app/*/*.js.map
+=======
 app/**/*.js
 app/**/*.js.map
+>>>>>>> 1debeea60bcf3664658906d52adf0a8ade90abdb
