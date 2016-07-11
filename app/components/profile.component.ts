@@ -4,12 +4,14 @@ import { Router } from 'angular2/router';
 import { ProviderService } from '../services/provider.service';
 import { AlertService } from '../services/alert.service';
 import { Provider } from '../models/provider';
+import {MaskDirective} from '../directives/mask.directive';
 
 
 @Component({
     selector: 'profile', 
     templateUrl: 'views/profile.html',
     providers: [ProviderService],
+    directives: [MaskDirective]
 })
 
 export class ProfileComponent implements OnInit {
