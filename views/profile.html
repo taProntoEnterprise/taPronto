@@ -21,7 +21,7 @@
 		  <div class = "col-sm-10">
 			<input type = "tel" class = "form-control"  id = "providerPhone" placeholder = "(XX) XXXX XXXX" 
 			[(ngModel)]="phones[i].value"  pattern="[0-9() ]*" mask="(**) **** ****"
-			title="Telefone deve ter apenas números no formato XXXXXXXX"/>
+			title="Telefone deve ter apenas números no formato (XX) XXXX XXXX"/>
 		  </div>	
  		 </div>
  		
@@ -45,11 +45,11 @@
 		    <div class = "form-group">
 			  	<label for = "providerName" *ngIf= "provider.documentType" class = "col-sm-2 control-label">Número do {{provider.documentType}}</label>
 			  	<div class = "col-sm-10">
-				 <input type = "text" *ngIf= "provider.documentType == 'CPF' "  class = "form-control" id = "providerName" placeholder = "XXX.XXX.XXX-XX"
+				 <input type = "text" *ngIf= "provider.documentType == 'CPF' "  class = "form-control" id = "providerName" placeholder = "XXX.XXX.XXX-XX" mask="***.***.***-**"
 				  [(ngModel)]="provider.documentNumber" 
 				  pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$" title="CPF deve ter formato XXX.XXX.XXX-XX"/>  
 				  
-				 <input type = "text" *ngIf= "provider.documentType == 'RG' "  class = "form-control" id = "providerName" placeholder = "XXXXXXX"
+				 <input type = "text" *ngIf= "provider.documentType == 'RG' "  class = "form-control" id = "providerName" placeholder = "XXXXXX-X" mask="******-*"
 				  [(ngModel)]="provider.documentNumber"
 				  pattern="[0-9]{7}$" title="RG deve ter 7 digitos num�ricos"/>  
 				  
