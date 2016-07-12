@@ -4,12 +4,14 @@ import { Router } from 'angular2/router';
 import { ProviderService } from '../services/provider.service';
 import { AlertService } from '../services/alert.service';
 import { Provider } from '../models/provider';
+import {MaskDirective} from '../directives/mask.directive';
 
 
 @Component({
     selector: 'profile', 
     templateUrl: 'views/profile.html',
     providers: [ProviderService],
+    directives: [MaskDirective]
 })
 
 export class ProfileComponent implements OnInit {
@@ -54,15 +56,35 @@ export class ProfileComponent implements OnInit {
 	}
 
 	addNewPhone() {
-	    this.phones.push({});
+		if (this.phones[this.phones.length-1] === undefined || 
+			Object.keys(this.phones[this.phones.length-1]).length !== 0) {
+			this.phones.push({});
+		}
+		else {
+				this._alertService.addSuccessAlert("Preencha o campo anterior primeiro.");
+		}
 	}
 
 	addNewAddress() {
-		this.addresses.push({});
+		if (this.addresses[this.addresses.length-1] === undefined || 
+			Object.keys(this.addresses[this.addresses.length-1]).length !== 0) {
+			this.addresses.push({});
+		}
+		else {
+				this._alertService.addSuccessAlert("Preencha o campo anterior primeiro.");
+		}	
 	}
 
 	addNewEmail() {
-		this.emails.push({});
+		if(this.emails.length <= 3) {
+			if (this.emails[this.emails.length-1] === undefined || 
+			Object.keys(this.emails[this.emails.length-1]).length !== 0) {
+				this.emails.push({});
+			}	
+			else {
+				this._alertService.addSuccessAlert("Preencha o campo anterior primeiro.");
+			}
+		}
 	}
 
 	afterRegister(provider){

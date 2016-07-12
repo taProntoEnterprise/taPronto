@@ -34,6 +34,7 @@ export class AddOrderComponent implements OnInit {
 
 	registerOrder(){
 		this.newOrder.service = this.selectedService._id;
+		console.log(this.selectedClient);
 		this.newOrder.client = this.selectedClient._id;
 		this._orderService.registerOrder(this.newOrder).subscribe(
 			order => this.afterSuccessfulRegister(),

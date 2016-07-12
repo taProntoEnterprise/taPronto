@@ -14,6 +14,7 @@ export class PersonService {
 		let url = 'https://tapronto1.herokuapp.com/person/' + userId;
 		return this.http.get(url, options)
                   .map(res => res.json().result.data)
+                  .do(person => console.log(person))
 				  .catch(this.handleError);
 	}
 
