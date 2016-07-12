@@ -25,7 +25,7 @@ router.get('/',jwt,function (req,res) {
             error.code = err.code;
             error.message = err.message;
         }else if(doc){
-            result = doc;
+            result.data = doc;
             res.status(200);
             res.contentType('application/json');
         }else{
@@ -138,7 +138,7 @@ router.get('/:userId',function(req,res) {
             error.code = err.code;
             error.message = err.message;
         }else if(doc){
-            result = doc;
+            result.data = doc;
             res.status(200);
             res.contentType('application/json');
         }else{
