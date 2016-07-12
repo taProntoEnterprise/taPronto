@@ -31,6 +31,7 @@ router.get('/',jwt,function (req,res) {
         }else{
             res.status(404);
             error.message="Person Not Found!"
+            error.code = 404;
             res.contentType('application/json');
         }
         res.send(JSON.stringify({"result":result, "error":error}));
@@ -136,10 +137,14 @@ router.get('/:userId',function(req,res) {
             res.status(500);
             error.code = err.code;
             error.message = err.message;
-
-        }else{
-            result.data = doc;
+        }else if(doc){
+            result = doc;
             res.status(200);
+            res.contentType('application/json');
+        }else{
+            res.status(404);
+            error.message="Person Not Found!"
+            error.code = 404;
             res.contentType('application/json');
         }
         res.send(JSON.stringify({"result":result, "error":error}));
