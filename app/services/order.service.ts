@@ -29,9 +29,10 @@ export class OrderService {
 		return this.http.get(url, options)
 		.flatMap(order => {
 			let idUserClient = <Object>order.json().result.data.client;
-			return this._personService.getPerson(idUserClient).map(client => {
+			return this._personService.getPerson(idUserClient).map(info => {
+				console.log(info);
 				let mappedOrder = <Object>order.json().result.data;
-				mappedOrder.client = client;
+				mappedOrder.client = info;
 				return mappedOrder;
 			})
 		})

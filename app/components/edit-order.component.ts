@@ -1,7 +1,7 @@
 import { Component, OnInit } from 'angular2/core';
 import { OrderService } from '../services/order.service';
 import { RequestOptions } from 'angular2/http';
-import { RouteParams } from 'angular2/router';
+import { RouteParams, Router } from 'angular2/router';
 import { AlertService } from '../services/alert.service';
 import { LOGGED_USER, UserService } from '../services/user.service';
 import { ServiceListComponent } from './service-list.component';
@@ -20,7 +20,8 @@ export class EditOrderComponent implements OnInit {
 		private _orderService: OrderService,
 		private _serviceService: ServiceService,
 		private _userService: UserService,
-		private _routeParams: RouteParams) { }
+		private _routeParams: RouteParams,
+		private _router: Router) { }
 
 	public order;
 	public ok = false;
@@ -34,9 +35,13 @@ export class EditOrderComponent implements OnInit {
 
 	updateOrder(){
 		let orderPut = this.order;
+		console.log(orderPut.client);
 		orderPut.client = this.order.client.user;
 		this._orderService.readyOrder(orderPut)
-			.subscribe(success => this._alertService.addSuccessAlert("Pedido atualizado com sucesso!"),
+			.subscribe(success => {
+					this._alertService.addSuccessAlert("Pedido atualizado com sucesso!";
+					this._router.navigate(['Order']);
+				}),
 				error => this.alertaErro(error.message))
 	}
 

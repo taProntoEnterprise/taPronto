@@ -5,12 +5,14 @@
     <tr>
       <th>Código</th>
       <th>Descrição</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="#order of orderList" (click)="orderClick(order)">
       <td>{{order.code}}</td>
       <td>{{order.description}}</td>
+      <td>{{order.status}}</td>
     </tr>
   </tbody>
    <div *ngIf="orderList == 0" align="center">

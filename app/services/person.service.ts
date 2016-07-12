@@ -14,6 +14,7 @@ export class PersonService {
 		let url = 'http://localhost:3000/person/' + userId;
 		return this.http.get(url, options)
                   .map(res => res.json().result.data)
+                  .do(person => console.log(person))
 				  .catch(this.handleError);
 	}
 
