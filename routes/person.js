@@ -131,7 +131,7 @@ router.get('/:userId',function(req,res) {
     var error = {};
     var result = {};
     var userId = req.params.userId;
-    Person.findOne({user:userId},function(err,doc){
+    Person.findOne({user:userId}).populate('blockedProviders', 'name').exec(function(err,doc){
         if(err){
             res.contentType('application/json');
             res.status(500);
