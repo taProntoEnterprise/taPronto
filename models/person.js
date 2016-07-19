@@ -10,5 +10,6 @@ var PersonSchema = new mongoose.Schema
 	user: {type:mongoose.Schema.Types.ObjectId, ref:"User"},
 	blockedProviders:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}]
 });
+
 PersonSchema.index({name:1});
 module.exports = mongoose.model("Person",PersonSchema);
