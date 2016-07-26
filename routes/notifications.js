@@ -94,11 +94,13 @@ router.post('/',jwt, function(req, res) {
             				error.code = 404;
             				error.message = "User Not Found";
 							res.send(JSON.stringify({"result": result, "error": error}));
+		 				}else if(!doc2.gcmIds){
+		 					res.status(201);
+		 					result.message = "The user doesn't have any registred device"
 		 				}else{
 		 					res.status(200);
 		 					result.sent="Ok";
 		 					gcmSender(doc2.gcmIds,notification.message,"Order Updated");
-  							//res.send(JSON.stringify({"result": result, "error": error}));
 		 				}
 		      		});
 				}
