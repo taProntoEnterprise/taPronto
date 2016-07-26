@@ -7,9 +7,11 @@ import {Observable} from 'rxjs/Observable';
 export class UserService {
 	constructor(private http: Http) { }
 
-	private _loginUrl = 'https://tapronto1.herokuapp.com/users/login';
-	private _newUserUrl = 'https://tapronto1.herokuapp.com/users';
+	//private _loginUrl = 'https://tapronto1.herokuapp.com/users/login';
+	//private _newUserUrl = 'https://tapronto1.herokuapp.com/users';
 
+	private _loginUrl = 'http://localhost:3000/users/login';
+	private _newUserUrl = 'http://localhost:3000/users';
 	login(loginUser: Object) {
 		let body = JSON.stringify(loginUser);
 		let headers = new Headers({ 'Content-Type': 'application/json' });

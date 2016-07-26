@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema
 		username: {type:String, required:true, unique:true},
 		password: {type:String, required:true},
 		person: {type:mongoose.Schema.Types.ObjectId, ref:"Person"},
-		provider: {type:mongoose.Schema.Types.ObjectId, ref:"Provider"}
+		provider: {type:mongoose.Schema.Types.ObjectId, ref:"Provider"},
+		gcmIds : [String]
 	}
 
 );

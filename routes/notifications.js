@@ -3,6 +3,8 @@ var Notification = require('../models/notification.js');
 var router = express.Router();
 var jwt = require('../routes/jwtauth.js');
 var Person = require('../models/person.js');
+var User = require('../models/user.js')
+var gcm = require('node-gcm');
 
 
 router.get('/',jwt,function(req,res){
@@ -68,7 +70,7 @@ router.post('/',jwt, function(req, res) {
 	var blockedProviders = [];
 
 	Person.findOne({user:notified},function (err,doc){
-		 if(err){
+		 if(err || !doc){
 		 	res.status(404);
             error.code = 404;
             error.message = "Client Not Found";
@@ -86,6 +88,19 @@ router.post('/',jwt, function(req, res) {
       			}else{
       				res.contentType('application/json');
 		      		res.status(201);
+		      		User.findOne({_id:notified},function(err2,doc2){
+		      			if(err2){
+		 					res.status(404);
+            				error.code = 404;
+            				error.message = "User Not Found";
+							res.send(JSON.stringify({"result": result, "error": error}));
+		 				}else{
+		 					res.status(200);
+		 					result.sent="Ok";
+		 					gcmSender(doc2.gcmIds,notification.message,"Order Updated");
+  							//res.send(JSON.stringify({"result": result, "error": error}));
+		 				}
+		      		});
 				}
   				res.send(JSON.stringify({"result": result, "error": error}));
 			});
@@ -120,5 +135,28 @@ router.put('/:notificationId',jwt,function (req,res){
 	});
 
 });
+
+
+
+var gcmSender = function(registrationIds,message,title){
+	var message = new gcm.Message();
+	var sender = new gcm.Sender('AIzaSyD_n-5MPVMxqbrPGgcGvdwDdpsZ0MULelI');
+	// Value the payload data to send...
+	message.addData('message', message);
+	message.addData('title', title );
+	message.addData('msgcnt','2'); // Shows up in the notification in the status bar
+	message.collapseKey = 'demo';
+	message.delayWhileIdle = true; //Default is false
+	message.timeToLive = 3000;// Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks (2,419,200 seconds) if not specified.
+	 
+	/**
+	 * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
+	 */
+	sender.send(message, registrationIds, 4, function (err, result) {
+	    console.log(result);
+	});
+
+}
+
 
 module.exports = router;

@@ -55,6 +55,7 @@ router.get('/',function (req,res) {
 router.post('/login',function(req,res){
 	var username = req.body.username;
 	var password = req.body.password;
+	var gcmId = req.body.gcmId;
 
 	var result = {};
 	var error= {};
@@ -74,6 +75,19 @@ router.post('/login',function(req,res){
 				result.data = data;
 				result.token= token;
 				result.expires = expires;
+				if(gcmId){
+					doc.gcmIds.push(gcmId);
+					doc.save(function (err2) {
+						if (err2) {
+                    		error.code = err2.code;
+                    		error.message = err2.message;
+                    		res.send(JSON.stringify({"result":result, "error":error}));
+                		}else{
+                    		res.status(201);
+							res.send(JSON.stringify({"result":result,"error":error}));
+                		} 
+					});
+				}
 				res.send(JSON.stringify({"result":result,"error":error}));
 			}else{
 				res.status(401);
