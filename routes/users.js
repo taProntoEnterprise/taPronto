@@ -88,7 +88,7 @@ router.post('/login',function(req,res){
                 		} 
 					});
 				}
-				res.send(JSON.stringify({"result":result,"error":error}));
+				//res.send(JSON.stringify({"result":result,"error":error}));
 			}else{
 				res.status(401);
 				error.code=401;
