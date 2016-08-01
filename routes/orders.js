@@ -1,12 +1,13 @@
 var express = require('express');
 var Order = require('../models/order.js');
 var Person = require('../models/person.js');
-var Person = require('../models/provider.js');
-var Person = require('../models/person.js');
+var Provider = require('../models/provider.js');
+var User = require('../models/user.js')
 var Notification = require('../models/notification.js');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var jwt = require('../routes/jwtauth.js');
+var gcm = require('node-gcm');
 
 
 router.get('/', jwt, function(req,res){
@@ -103,6 +104,21 @@ router.put('/:orderId',function(req,res){
                 }else{
                     res.status(201);
                     result.notification = newNotification;
+                    User.findOne({_id:newNotification.notified},function(err3,doc3){
+                        if(err3){
+                            res.status(404);
+                            error.code = 404;
+                            error.message = "User Not Found";
+                            res.send(JSON.stringify({"result": result, "error": error}));
+                        }else if(!doc3.gcmIds){
+                            res.status(201);
+                            result.message = "The user doesn't have any registred device"
+                        }else{
+                            res.status(200);
+                            result.sent="Ok";
+                            gcmSender(doc3.gcmIds,notification.message,"Order Updated");
+                        }
+                    });
 
                 }
                     res.send(JSON.stringify({"result":result, "error":error}));
@@ -151,6 +167,27 @@ router.post('/', jwt,function(req, res) {
     });
     
 });
+
+var gcmSender = function(registrationIds,message,title){
+    var message = new gcm.Message();
+    var sender = new gcm.Sender('AIzaSyD_n-5MPVMxqbrPGgcGvdwDdpsZ0MULelI');
+    // Value the payload data to send...
+    message.addData('message', message);
+    message.addData('title', title );
+    message.addData('msgcnt','2'); // Shows up in the notification in the status bar
+    message.collapseKey = 'demo';
+    message.delayWhileIdle = true; //Default is false
+    message.timeToLive = 3000;// Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks (2,419,200 seconds) if not specified.
+     
+    /**
+     * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
+     */
+    sender.send(message, registrationIds, 4, function (err, result) {
+        console.log(result);
+    });
+
+}
+
 
 
 module.exports = router;

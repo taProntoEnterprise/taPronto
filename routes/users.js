@@ -76,7 +76,9 @@ router.post('/login',function(req,res){
 				result.token= token;
 				result.expires = expires;
 				if(gcmId){
-					doc.gcmIds.push(gcmId);
+					if(doc.gcmIds.indexOf(gcmId)<0){
+						doc.gcmIds.push(gcmId);
+					}
 					doc.save(function (err2) {
 						if (err2) {
                     		error.code = err2.code;

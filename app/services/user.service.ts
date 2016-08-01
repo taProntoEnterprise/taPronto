@@ -10,8 +10,8 @@ export class UserService {
 	private _loginUrl = 'https://tapronto1.herokuapp.com/users/login';
 	private _newUserUrl = 'https://tapronto1.herokuapp.com/users';
 
-	//private _loginUrl = 'http://localhost:3000/users/login';
-	//private _newUserUrl = 'http://localhost:3000/users';
+	// private _loginUrl = 'http://localhost:3000/users/login';
+	// private _newUserUrl = 'http://localhost:3000/users';
 	login(loginUser: Object) {
 		let body = JSON.stringify(loginUser);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -49,6 +49,7 @@ export class UserService {
 
 	searchUser(username) {
 		var url = 'https://tapronto1.herokuapp.com/users/?username=' + username;
+		// var url = 'http://localhost:3000/users/?username=' + username;
 		return this.http.get(url)
 		.map(res => <Object>res.json().result.data)
 		.do(res => console.log(res))

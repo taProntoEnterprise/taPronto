@@ -9,6 +9,7 @@ export class ProviderService {
 	constructor(private http: Http) { }
 
 	private _providersUrl = 'https://tapronto1.herokuapp.com/providers/';
+	// private _providersUrl = 'http://localhost:3000/providers/';
 
 	getProvider(userId) {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });

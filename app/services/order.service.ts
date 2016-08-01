@@ -12,6 +12,7 @@ export class OrderService {
 		private _personService: PersonService) { }
 
 	private _orderUrl = 'https://tapronto1.herokuapp.com/orders/';
+	// private _orderUrl = 'http://localhost:3000/orders/';
 
 	getOrders() {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
@@ -26,6 +27,7 @@ export class OrderService {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
 		let options = new RequestOptions({ headers: headers });
 		var url = 'https://tapronto1.herokuapp.com/orders/' + idOrder;
+		// var url = 'http://localhost:3000/orders/' + idOrder;
 		return this.http.get(url, options)
 		.flatMap(order => {
 			let idUserClient = <Object>order.json().result.data.client;
@@ -58,6 +60,7 @@ export class OrderService {
 
     readyOrder(order) {
 		var url = 'https://tapronto1.herokuapp.com/orders/' + order._id;
+		// var url = 'http://localhost:3000/orders/' + order._id;
 		order.status = "taPronto";
 
 		let body = JSON.stringify(order);

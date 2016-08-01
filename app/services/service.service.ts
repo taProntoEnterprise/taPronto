@@ -9,6 +9,7 @@ export class ServiceService {
 	constructor(private http: Http) { }
 
 	private _serviceUrl = 'https://tapronto1.herokuapp.com/services/';
+	// private _serviceUrl = 'http://localhost:3000/services/';
 
 	getServices() {
 		let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': userToken });
