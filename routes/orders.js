@@ -116,7 +116,7 @@ router.put('/:orderId',function(req,res){
                         }else{
                             res.status(200);
                             result.sent="Ok";
-                            gcmSender(doc3.gcmIds, doc.description,"taPronto", doc3._id, doc._id);
+                            gcmSender(doc3.gcmIds, doc.description,"taPronto", doc3._id, orderId);
                         }
                     });
 
@@ -176,7 +176,7 @@ var gcmSender = function(registrationIds,message,title,userId,orderId){
     message.addData('title', title );
 	message.addData('userId', userId );
 	message.addData('orderId', orderId );
-    message.addData('msgcnt','2'); // Shows up in the notification in the status bar
+    message.addData('msgcnt','1'); // Shows up in the notification in the status bar
     message.collapseKey = 'demo';
     message.delayWhileIdle = true; //Default is false
     message.timeToLive = 3000;// Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks (2,419,200 seconds) if not specified.
