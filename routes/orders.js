@@ -116,7 +116,7 @@ router.put('/:orderId',function(req,res){
                         }else{
                             res.status(200);
                             result.sent="Ok";
-                            gcmSender(doc3.gcmIds,notification.message,"Order Updated", newNotification.notified, newOrder._id);
+                            gcmSender(doc3.gcmIds,notification.message,"taPronto", doc3._id, newOrder._id);
                         }
                     });
 
@@ -174,8 +174,6 @@ var gcmSender = function(registrationIds,messageText,title,userId,orderId){
     // Value the payload data to send...
     message.addData('message', messageText);
     message.addData('title', title );
-    message.addData('userId', userId );
-    message.addData('orderId', orderId );
     message.addData('title', title );
     message.addData('msgcnt','2'); // Shows up in the notification in the status bar
     message.collapseKey = 'demo';
