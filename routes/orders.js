@@ -116,7 +116,7 @@ router.put('/:orderId',function(req,res){
                         }else{
                             res.status(200);
                             result.sent="Ok";
-                            gcmSender(doc3.gcmIds,notification.message,"taPronto", doc3._id, newOrder._id);
+                            gcmSender(doc3.gcmIds,notification.message,"taPronto");
                         }
                     });
 
