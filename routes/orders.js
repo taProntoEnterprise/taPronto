@@ -168,12 +168,11 @@ router.post('/', jwt,function(req, res) {
     
 });
 
-var gcmSender = function(registrationIds,messageText,title,userId,orderId){
+var gcmSender = function(registrationIds,message,title,userId,orderId){
     var message = new gcm.Message();
     var sender = new gcm.Sender('AIzaSyD_n-5MPVMxqbrPGgcGvdwDdpsZ0MULelI');
     // Value the payload data to send...
-    message.addData('message', messageText);
-    message.addData('title', title );
+    message.addData('message', message);
     message.addData('title', title );
     message.addData('msgcnt','2'); // Shows up in the notification in the status bar
     message.collapseKey = 'demo';
