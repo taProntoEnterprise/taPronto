@@ -116,7 +116,7 @@ router.put('/:orderId',function(req,res){
                         }else{
                             res.status(200);
                             result.sent="Ok";
-                            gcmSender(doc3.gcmIds, doc.description,"taPronto");
+                            gcmSender(doc3.gcmIds, doc.description,"taPronto", doc3._id, doc._id);
                         }
                     });
 
@@ -174,6 +174,8 @@ var gcmSender = function(registrationIds,message,title,userId,orderId){
     // Value the payload data to send...
     message.addData('message', 'Um pedido está pronto.');
     message.addData('title', title );
+	message.addData('userId', userId );
+	message.addData('orderId', orderId );
     message.addData('msgcnt','2'); // Shows up in the notification in the status bar
     message.collapseKey = 'demo';
     message.delayWhileIdle = true; //Default is false
