@@ -47,6 +47,8 @@ router.get('/:serviceId',function(req,res){
 	var result = {};
 	var serviceId = req.params.serviceId;
 
+  const startUsage = process.cpuUsage();
+
 	Service.findOne({_id:serviceId},function(err,doc){
     if(err){
 
@@ -60,16 +62,20 @@ router.get('/:serviceId',function(req,res){
       res.contentType('application/json');
       res.send(JSON.stringify({"result":result, "error":error}));
       }
+    logStatistics("adsdCPULog.txt", cpuUsage+", get");
+
 	});
 });
 
 router.post('/', jwt,function(req, res) {
-   file = "adsdLog.txt";
+  file = "adsdLog.txt";
   logStatistics(file,"POST_req_start:"+new Date());
+  const startUsage = process.cpuUsage();
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
 	
+  console.log( "hffffffffereeeeee");
 
 	//remove after token based authentication is ready
 	 var userId = null;
@@ -93,8 +99,9 @@ router.post('/', jwt,function(req, res) {
 		      res.status(201);
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
-      logStatistics(file,"POST_req_end"+new Date())
-
+      var cpuUsage = process.cpuUsage(startUsage);
+      logStatistics(file,"POST_req_end"+new Date());
+      logStatistics("adsdCPULog.txt", cpuUsage + ", post");
 	});
 });
 
@@ -122,6 +129,7 @@ router.put('/:serviceId',function(req,res){
 });
 
 var logStatistics = function(file, message){
+  console.log( "hereeeeee");
     fs.appendFile(file, message+"\n", (err) => {
         if (err){
           console.log("ERROR WRITNG FILE");
