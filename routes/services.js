@@ -2,9 +2,14 @@ var express = require('express');
 var Service = require('../models/service.js');
 var router = express.Router();
 var jwt = require('../routes/jwtauth.js');
+var fs = require('fs');
+var Process = require('process');
 
 
 router.get('/',jwt,function(req,res){
+  file = "adsdLog.txt";
+  logStatistics(file,"GET_req_start:"+new Date());
+
 	var error = {};
 	var result = {};
 
@@ -18,16 +23,22 @@ router.get('/',jwt,function(req,res){
 
 	Service.find({provider:userId},function(err,doc){
 		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
+      logStatistics(file,"GET_db_res:"+new Date())
 
-            }else{
-                result.data = doc;
-                res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
-            }
+      res.contentType('application/json');
+      res.status(500);
+      error.code = err.code;
+      error.message = err.message;
+      logStatistics(file,"req_end"+new Date())
+
+    }else{
+      logStatistics(file,"GET_db_res:"+new Date())
+
+      result.data = doc;
+      res.contentType('application/json');
+      res.send(JSON.stringify({"result":result, "error":error}));
+      logStatistics(file,"GET_req_end"+new Date())
+    }
 	});
 });
 
@@ -37,21 +48,24 @@ router.get('/:serviceId',function(req,res){
 	var serviceId = req.params.serviceId;
 
 	Service.findOne({_id:serviceId},function(err,doc){
-		if(err){
-                res.contentType('application/json');
-                res.status(500);
-                error.code = err.code;
-                error.message = err.message;
+    if(err){
 
-            }else{
-                result.data = doc;
-                res.contentType('application/json');
-                res.send(JSON.stringify({"result":result, "error":error}));
-            }
+      res.contentType('application/json');
+      res.status(500);
+      error.code = err.code;
+      error.message = err.message;
+
+    }else{
+      result.data = doc;
+      res.contentType('application/json');
+      res.send(JSON.stringify({"result":result, "error":error}));
+      }
 	});
 });
 
 router.post('/', jwt,function(req, res) {
+   file = "adsdLog.txt";
+  logStatistics(file,"POST_req_start:"+new Date());
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
@@ -69,14 +83,18 @@ router.post('/', jwt,function(req, res) {
 
 	service.save(function(err) {
 		if (err) {
+       logStatistics(file,"POST_db_res:"+new Date())
 			error.code = err.code;
 			error.message = err.message;
       		//11000: duplicated key
       		error.code == 11000 ? res.status(409) : res.status(500);
       	}else{
+           logStatistics(file,"POST_db_res:"+new Date())
 		      res.status(201);
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
+      logStatistics(file,"POST_req_end"+new Date())
+
 	});
 });
 
@@ -102,5 +120,15 @@ router.put('/:serviceId',function(req,res){
         res.send(JSON.stringify({"result":result, "error":error}));
 	});
 });
+
+var logStatistics = function(file, message){
+    fs.appendFile(file, message+"\n", (err) => {
+        if (err){
+          console.log("ERROR WRITNG FILE");
+          throw err;
+        } 
+    });
+
+}
 
 module.exports = router;
