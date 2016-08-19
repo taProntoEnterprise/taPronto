@@ -251,18 +251,33 @@ var users = [{
     "password": "test123"
 }];
 
-var services = [{
-	"code": "1234",
-	"description": "bolo1",
-	"generator": new Person ({
-		"name": "nome1"
-	}),
-	"client": new Person ({
-		"name": "nome2"
-	}),
-	"status": "aguardando",
-	"creation_date": new Date()
-}];
+var services = [{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"},{"name":"Ajeitar a interface WEB",
+    "provider":"574276648ec8b1464b8c3215",
+    "description":"teste do post"}]
 
 var notifications = [{
 	"code": "2222",

@@ -8,7 +8,11 @@ var Process = require('process');
 
 router.get('/',jwt,function(req,res){
   file = "adsdLog.txt";
-  logStatistics(file,"GET_req_start:"+new Date());
+  before = new Date();
+
+  logStatistics(file,"GET_req_start:"+ before);
+  const startUsage = process.cpuUsage();
+
 
 	var error = {};
 	var result = {};
@@ -23,21 +27,27 @@ router.get('/',jwt,function(req,res){
 
 	Service.find({provider:userId},function(err,doc){
 		if(err){
-      logStatistics(file,"GET_db_res:"+new Date())
+      now = new Date();
+      logStatistics(file,"GET_db_res:"+(now - before));
 
       res.contentType('application/json');
       res.status(500);
       error.code = err.code;
       error.message = err.message;
-      logStatistics(file,"req_end"+new Date())
+      pos = new Date();
+      logStatistics(file,"req_end"+(pos - before));
 
     }else{
-      logStatistics(file,"GET_db_res:"+new Date())
+      now = new Date();
+      logStatistics(file,"GET_db_res:"+(now - before));
 
       result.data = doc;
       res.contentType('application/json');
       res.send(JSON.stringify({"result":result, "error":error}));
-      logStatistics(file,"GET_req_end"+new Date())
+      pos = new Date();
+      var cpuUsage = process.cpuUsage(startUsage)["system"];
+      logStatistics("adsdCPULog.txt", cpuUsage + "ms GET at: "+pos+"\n");
+      logStatistics(file,"GET_req_end"+(pos - before)+"\n");
     }
 	});
 });
@@ -69,13 +79,13 @@ router.get('/:serviceId',function(req,res){
 
 router.post('/', jwt,function(req, res) {
   file = "adsdLog.txt";
-  logStatistics(file,"POST_req_start:"+new Date());
+  before = new Date();
+  logStatistics(file,"POST_req_start:"+before);
   const startUsage = process.cpuUsage();
 	var service = new Service(req.body);
 	var error= {};
 	var result = {};
 	
-  console.log( "hffffffffereeeeee");
 
 	//remove after token based authentication is ready
 	 var userId = null;
@@ -88,24 +98,30 @@ router.post('/', jwt,function(req, res) {
 	service.provider = userId;
 
 	service.save(function(err) {
-		if (err) {
-       logStatistics(file,"POST_db_res:"+new Date())
+    now = new Date();
+    if (err) {
+      logStatistics(file,"POST_db_res after: "+(now - before));
 			error.code = err.code;
 			error.message = err.message;
-      		//11000: duplicated key
-      		error.code == 11000 ? res.status(409) : res.status(500);
-      	}else{
-           logStatistics(file,"POST_db_res:"+new Date())
-		      res.status(201);
+      //11000: duplicated key
+      error.code == 11000 ? res.status(409) : res.status(500);
+  	}else{
+      logStatistics(file,"POST_db_res after:"+(now - before));
+      res.status(201);
 		}
   		res.send(JSON.stringify({"result": result, "error": error}));
-      var cpuUsage = process.cpuUsage(startUsage);
-      logStatistics(file,"POST_req_end"+new Date());
-      logStatistics("adsdCPULog.txt", cpuUsage + ", post");
-	});
+      var cpuUsage = process.cpuUsage(startUsage)["system"];
+      pos = new Date();
+      logStatistics(file,"POST_req_end after:"+(pos - before)+"\n");
+      logStatistics("adsdCPULog.txt", cpuUsage + "ms POST at: "+pos+"\n");
+  });
 });
 
 router.put('/:serviceId',function(req,res){
+  file = "adsdLog.txt";
+  before = new Date();
+  logStatistics(file,"PUT_req_start:"+before);
+  const startUsage = process.cpuUsage();
 	var result = {};
 	var error = {};
 	var serviceId = req.params.serviceId;
@@ -113,24 +129,33 @@ router.put('/:serviceId',function(req,res){
 	delete newService._id;
 
 	Service.update({_id:serviceId},newService,{},function(err,doc){
+    now = new Date();
 		if(err){
+      logStatistics(file,"PUT_db_res after: "+(now - before));
+
 			res.contentType('application/json');
-            res.status(500);
-            error.code=err.code;
-            error.message=err.message;
+      res.status(500);
+      error.code=err.code;
+      error.message=err.message;
 		}else{
+      logStatistics(file,"PUT_db_res after: "+(now - before));
+
 			res.contentType('application/json');
-            res.status(200);
-            newService._id=serviceId;
-            result.data=newService;
-        }
-        res.send(JSON.stringify({"result":result, "error":error}));
+      res.status(200);
+      newService._id=serviceId;
+      result.data=newService;
+    }
+    res.send(JSON.stringify({"result":result, "error":error}));
+    var cpuUsage = process.cpuUsage(startUsage)["system"];
+    pos = new Date();
+    logStatistics(file,"PUT_req_end after:"+(pos - before)+"\n");
+    logStatistics("adsdCPULog.txt", cpuUsage + "ms PUT at: "+pos+"\n");//microseconds
+
 	});
 });
 
 var logStatistics = function(file, message){
-  console.log( "hereeeeee");
-    fs.appendFile(file, message+"\n", (err) => {
+    fs.appendFile(file, message+"\n",function(err){
         if (err){
           console.log("ERROR WRITNG FILE");
           throw err;

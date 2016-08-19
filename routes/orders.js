@@ -8,6 +8,8 @@ var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var jwt = require('../routes/jwtauth.js');
 var gcm = require('node-gcm');
+var Process = require('process');
+var fs = require('fs');
 
 
 router.get('/', jwt, function(req,res){
@@ -189,7 +191,5 @@ var gcmSender = function(registrationIds,message,title,userId,orderId){
     });
 
 }
-
-
 
 module.exports = router;

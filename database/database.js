@@ -14,7 +14,7 @@ conf_set.forEach(function(data_row){
 });
 
 //heroku dp: mongodb://heroku_j0825v7g:9uh22o76bckinmmkpu741embk6@ds019678.mlab.com:19678/heroku_j0825v7g
-var connection = mongoose.createConnection("mongodb://heroku_j0825v7g:9uh22o76bckinmmkpu741embk6@ds019678.mlab.com:19678/heroku_j0825v7g");
+var connection = mongoose.createConnection("mongodb://localhost:27017/taPronto");
 autoIncrement.initialize(connection);
 
-module.exports = mongoose.connect("mongodb://heroku_j0825v7g:9uh22o76bckinmmkpu741embk6@ds019678.mlab.com:19678/heroku_j0825v7g");
+module.exports = mongoose.connect("mongodb://localhost:27017/taPronto");
